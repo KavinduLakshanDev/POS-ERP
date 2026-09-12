@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Log;
 class DeduplicateVismassCustomers extends Command
 {
     protected $signature = 'app:deduplicate-vismass-customers';
-    protected $description = 'Deduplicate customers under VIS001 and merge their records';
+    protected $description = 'Deduplicate customers under C1 and merge their records';
 
     public function handle()
     {
@@ -24,7 +24,7 @@ class DeduplicateVismassCustomers extends Command
             $cleanPhoneSql = "TRIM(LEADING '0' FROM REPLACE(TP1, ' ', ''))";
             
             $duplicatePhones = Customer::select(DB::raw("{$cleanPhoneSql} as clean_phone"), DB::raw('COUNT(*) as count'))
-                ->where('company_code', 'VIS001')
+                ->where('company_code', 'C1')
                 ->whereNotNull('TP1')
                 ->where('TP1', '!=', '')
                 ->groupBy(DB::raw($cleanPhoneSql))
@@ -35,7 +35,7 @@ class DeduplicateVismassCustomers extends Command
 
             foreach ($duplicatePhones as $phone) {
                 // Fetch customers using the cleaned phone logic
-                $customers = Customer::where('company_code', 'VIS001')
+                $customers = Customer::where('company_code', 'C1')
                     ->whereRaw("{$cleanPhoneSql} = ?", [$phone])
                     ->orderBy('AdrKy', 'asc')
                     ->get();
@@ -56,7 +56,7 @@ class DeduplicateVismassCustomers extends Command
             // 2. DEDUPLICATE BY FULL NAME (FstNm + MidNm + LstNm)
             $this->info('Deduplicating by Full Name...');
             $duplicateNames = Customer::select('FstNm', 'MidNm', 'LstNm', DB::raw('COUNT(*) as count'))
-                ->where('company_code', 'VIS001')
+                ->where('company_code', 'C1')
                 ->groupBy('FstNm', 'MidNm', 'LstNm')
                 ->havingRaw('COUNT(*) > 1')
                 ->get(); // We get objects here so we can access all three name parts
@@ -65,7 +65,7 @@ class DeduplicateVismassCustomers extends Command
 
             foreach ($duplicateNames as $nameGroup) {
                 // Fetch customers matching all 3 name parts precisely (handling NULLs)
-                $customers = Customer::where('company_code', 'VIS001')
+                $customers = Customer::where('company_code', 'C1')
                     ->where('FstNm', $nameGroup->FstNm)
                     ->where(function($query) use ($nameGroup) {
                         if ($nameGroup->MidNm) {

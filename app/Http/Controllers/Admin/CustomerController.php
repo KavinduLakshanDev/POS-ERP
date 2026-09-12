@@ -344,7 +344,7 @@ class CustomerController extends Controller
             $section = null;
             if ($user && $user->company_code) {
                 $targetSectionCode = null;
-                if ($user->company_code === 'VIS001') {
+                if ($user->company_code === 'C1') {
                     $targetSectionCode = 'VIS-SEC-002';
                 } elseif ($user->company_code === 'MAL001') {
                     $targetSectionCode = 'MAL-SEC-002';

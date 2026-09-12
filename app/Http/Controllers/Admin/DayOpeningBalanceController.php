@@ -138,7 +138,7 @@ class DayOpeningBalanceController extends Controller
             $user->role?->slug === 'sales_rep' ||
             \Illuminate\Support\Str::endsWith($user->role?->slug ?? '', '_sales_rep') ||
             $user->delivery_section_code !== null;
-        // company admins may have plain slug or company-prefixed variant (e.g. vis001_company_admin)
+        // company admins may have plain slug or company-prefixed variant (e.g. C1_company_admin)
         $isCompanyAdmin = $user->role?->slug === 'company_admin' ||
             \Illuminate\Support\Str::endsWith($user->role?->slug ?? '', '_company_admin') ||
             $user->role_id === 2; // fallback on role_id classification
@@ -268,7 +268,7 @@ class DayOpeningBalanceController extends Controller
         $selectedUser = User::with('role')->findOrFail($validated['user_id']);
 
         // ensure selected user is either a cashier, company admin, or sales rep
-        // allow company-specific variants (e.g. vis001_cashier, mal001_company_admin)
+        // allow company-specific variants (e.g. C1_cashier, mal001_company_admin)
         $slug = $selectedUser->role?->slug;
         $isEligible = false;
         if ($slug) {

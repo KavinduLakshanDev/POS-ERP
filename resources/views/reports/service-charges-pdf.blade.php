@@ -22,7 +22,7 @@
 <body>
     @php
         $companyObj = is_array($company) ? (object) $company : $company;
-        $companyCode = strtoupper($companyObj->code ?? 'VIS001');
+        $companyCode = strtoupper($companyObj->code ?? 'C1');
         
         $vismassPng = public_path('images/vismass-logo.png');
         $malibuPng  = public_path('images/malibu-logo.png');

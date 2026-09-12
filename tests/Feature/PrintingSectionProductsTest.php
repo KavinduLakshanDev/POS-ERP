@@ -18,7 +18,7 @@ class PrintingSectionProductsTest extends TestCase
         $user = User::factory()->create();
         // ensure section_code exists for stock queries
         $user->section_code = $user->section_code ?: 'MAIN';
-        $user->company_code = $user->company_code ?: 'VIS001';
+        $user->company_code = $user->company_code ?: 'C1';
         $user->save();
 
         $this->actingAs($user);

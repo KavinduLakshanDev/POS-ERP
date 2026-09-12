@@ -60,7 +60,7 @@ Redirects to the dashboard on success.
 On every web request, if the user is a `super_admin` and `session('selected_company')` is set, the middleware patches the in-memory `User` model instance:
 
 ```php
-$user->company_code = $selected;                          // e.g. 'VIS001'
+$user->company_code = $selected;                          // e.g. 'C1'
 $user->section_code = $section->section_code;             // first section for that company
 ```
 
@@ -123,6 +123,6 @@ All three routes are protected by `auth:web` middleware.
 | Scenario | Behaviour |
 |----------|-----------|
 | Super admin visits any page without selecting a company | `company_code` remains `null`; queries may return no results or errors — user should always select a company first |
-| Super admin switches from VIS001 to MAL001 | Middleware always overwrites `section_code` with the first section of the new company; stale section from previous selection is never used |
+| Super admin switches from C1 to MAL001 | Middleware always overwrites `section_code` with the first section of the new company; stale section from previous selection is never used |
 | Non-super-admin user | Middleware does nothing; normal `company_code` / `section_code` from the DB record is used |
 | Company has no sections | `section_code` is not patched; controllers dependent on `section_code` may behave unexpectedly |

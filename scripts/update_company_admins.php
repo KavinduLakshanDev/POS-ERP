@@ -8,19 +8,11 @@ echo "Updating Company Admins to remove section assignments...\n";
 echo str_repeat("=", 80) . "\n\n";
 
 // Update Vismass admin
-$vismassAdmin = App\Models\User::where('email', 'vismass@example.com')->first();
+$vismassAdmin = App\Models\User::where('email', 'company_admin@example.com')->first();
 if ($vismassAdmin) {
     $vismassAdmin->section_code = null;
     $vismassAdmin->save();
-    echo "✓ Updated vismass@example.com - Section removed\n";
-}
-
-// Update Malibo admin
-$maliboAdmin = App\Models\User::where('email', 'malibo@example.com')->first();
-if ($maliboAdmin) {
-    $maliboAdmin->section_code = null;
-    $maliboAdmin->save();
-    echo "✓ Updated malibo@example.com - Section removed\n";
+    echo "✓ Updated company_admin@example.com - Section removed\n";
 }
 
 echo "\nVerification:\n";

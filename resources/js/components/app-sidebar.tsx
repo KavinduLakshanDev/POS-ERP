@@ -41,7 +41,7 @@ const companyNavItems: RoleNavItem[] = [
         icon: BookOpen,
         roles: ['company_admin'],
     },
-     {
+    {
         title: 'User Management',
         href: '/user-management',
         icon: Users,
@@ -172,7 +172,7 @@ const productsNavItems: RoleNavItem[] = [
 
 // Section 5: Invoicing & Sales
 const invoicingSalesNavItems: RoleNavItem[] = [
-   {
+    {
         title: 'Sales - Invoicing',
         href: '/sales',
         icon: Receipt,
@@ -259,7 +259,7 @@ const printerStockNavItems: RoleNavItem[] = [
         icon: ArrowLeftRight,
         permission: 'stock_adjustments.view',
     },
-   
+
 ];
 const stockReportsNavItems: RoleNavItem[] = [
     {
@@ -302,7 +302,7 @@ const stockReportsNavItems: RoleNavItem[] = [
 
 // Section 4: Payments
 const paymentsNavItems: RoleNavItem[] = [
-   
+
 ];
 
 // Section 5: Finance
@@ -331,7 +331,7 @@ const financeNavItems: RoleNavItem[] = [
         icon: DollarSign,
         permission: 'day_opening_balances.view',
     },
-     {
+    {
         title: 'Cheque Return',
         href: '/pos/cheque-return',
         icon: RefreshCw,
@@ -377,13 +377,13 @@ const financeNavItems: RoleNavItem[] = [
 
 // Section 5: Service Jobs
 const servicesNavItems: RoleNavItem[] = [
-     {
+    {
         title: 'Create Service Job',
         href: '/service-jobs/create',
         icon: Plus,
         permission: 'service_jobs.create',
     },
-     {
+    {
         title: 'Create Quotations',
         href: '/quotations',
         icon: ScrollText,
@@ -718,7 +718,7 @@ export function AppSidebar() {
         if (!item.roles || item.roles.length === 0) return true;
         if (!roleSlug && !userType) return false;
 
-        // Match both exact slug ('cashier') and company-prefixed slugs ('vis001_cashier')
+        // Match both exact slug ('cashier') and company-prefixed slugs ('C1_cashier')
         const roleMatches = item.roles.some(
             (r) => roleSlug === r || roleSlug?.endsWith('_' + r)
         );
@@ -1111,7 +1111,7 @@ export function AppSidebar() {
                     </Collapsible>
                 )}
 
-                 {/* Section 7: Deliveries */}
+                {/* Section 7: Deliveries */}
                 {filteredDeliveryInvoicingItems.length > 0 && (
                     <Collapsible defaultOpen={filteredDeliveryInvoicingItems.some((item) => page.url.startsWith(resolveUrl(item.href)))} className="group/collapsible">
                         <SidebarGroup className="px-2 py-0">
@@ -1175,7 +1175,7 @@ export function AppSidebar() {
                     </Collapsible>
                 )}
 
-                 {/* Section 5: Finance */}
+                {/* Section 5: Finance */}
                 {filteredFinanceItems.length > 0 && (
                     <Collapsible defaultOpen={filteredFinanceItems.some((item) => page.url.startsWith(resolveUrl(item.href)))} className="group/collapsible">
                         <SidebarGroup className="px-2 py-0">
@@ -1242,33 +1242,33 @@ export function AppSidebar() {
                 {/* Section 8a: Financial Reports */}
                 {filteredFinancialReports.length > 0 && (
                     <Collapsible defaultOpen={filteredFinancialReports.some((item) => page.url.startsWith(resolveUrl(item.href)))} className="group/collapsible">
-                    <SidebarGroup className="px-2 py-0">
-                        <SidebarGroupLabel asChild className="text-black font-bold text-sm cursor-pointer hover:bg-sidebar-accent hover:text-sidebar-accent-foreground">
-                            <CollapsibleTrigger className="flex w-full items-center">
-                                Financial Reports
-                                <ChevronRight className="ml-auto h-4 w-4 transition-transform group-data-[state=open]/collapsible:rotate-90" />
-                            </CollapsibleTrigger>
-                        </SidebarGroupLabel>
-                        <CollapsibleContent>
-                            <SidebarMenu>
-                                {filteredFinancialReports.map((item) => (
-                                    <SidebarMenuItem key={item.title}>
-                                        <SidebarMenuButton
-                                            asChild
-                                            isActive={page.url.startsWith(resolveUrl(item.href))}
-                                            tooltip={{ children: item.title }}
-                                        >
-                                            <Link href={item.href} prefetch>
-                                                {item.icon && <item.icon />}
-                                                <span>{item.title}</span>
-                                            </Link>
-                                        </SidebarMenuButton>
-                                    </SidebarMenuItem>
-                                ))}
-                            </SidebarMenu>
-                        </CollapsibleContent>
-                    </SidebarGroup>
-                </Collapsible>
+                        <SidebarGroup className="px-2 py-0">
+                            <SidebarGroupLabel asChild className="text-black font-bold text-sm cursor-pointer hover:bg-sidebar-accent hover:text-sidebar-accent-foreground">
+                                <CollapsibleTrigger className="flex w-full items-center">
+                                    Financial Reports
+                                    <ChevronRight className="ml-auto h-4 w-4 transition-transform group-data-[state=open]/collapsible:rotate-90" />
+                                </CollapsibleTrigger>
+                            </SidebarGroupLabel>
+                            <CollapsibleContent>
+                                <SidebarMenu>
+                                    {filteredFinancialReports.map((item) => (
+                                        <SidebarMenuItem key={item.title}>
+                                            <SidebarMenuButton
+                                                asChild
+                                                isActive={page.url.startsWith(resolveUrl(item.href))}
+                                                tooltip={{ children: item.title }}
+                                            >
+                                                <Link href={item.href} prefetch>
+                                                    {item.icon && <item.icon />}
+                                                    <span>{item.title}</span>
+                                                </Link>
+                                            </SidebarMenuButton>
+                                        </SidebarMenuItem>
+                                    ))}
+                                </SidebarMenu>
+                            </CollapsibleContent>
+                        </SidebarGroup>
+                    </Collapsible>
                 )}
             </SidebarContent>
 

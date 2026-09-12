@@ -9,11 +9,11 @@ use Illuminate\Support\Facades\DB;
 class CheckDuplicateCustomers extends Command
 {
     protected $signature = 'app:check-duplicate-customers';
-    protected $description = 'Check for duplicate customers in Vismass (VIS001)';
+    protected $description = 'Check for duplicate customers in Vismass (C1)';
 
     public function handle()
     {
-        $this->info('Checking for duplicate customers under VIS001...');
+        $this->info('Checking for duplicate customers under C1...');
 
         // 1. Remove spaces
         // 2. Remove the starting '0'
@@ -26,7 +26,7 @@ class CheckDuplicateCustomers extends Command
                 DB::raw("{$cleanPhoneSql} as clean_phone"), 
                 DB::raw('COUNT(*) as count')
             )
-            ->where('company_code', 'VIS001')
+            ->where('company_code', 'C1')
             ->whereNotNull('TP1')
             ->where('TP1', '!=', '')
             ->groupBy('FstNm', 'MidNm', 'LstNm', DB::raw($cleanPhoneSql))

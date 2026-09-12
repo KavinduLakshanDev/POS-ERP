@@ -121,7 +121,7 @@
 <body onload="window.print()">
     @php
         // Pick logo based on the company code (VisMass vs Malibu)
-        $companyCode = strtoupper($company->company_code ?? 'VIS001');
+        $companyCode = strtoupper($company->company_code ?? 'C1');
         $companyName = $company->name ?? 'VISMASS';
 
         $fallbackLogo = asset('images/Vismass-logo.png');

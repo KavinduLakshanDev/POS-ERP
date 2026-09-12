@@ -387,7 +387,7 @@ class PermissionSeeder extends Seeder
         $allPermissions = Permission::all()->pluck('id');
 
         // Company admins (get all permissions, scoped to their company at runtime)
-        foreach (['vis001_company_admin', 'mal001_company_admin'] as $slug) {
+        foreach (['C1_company_admin', 'mal001_company_admin'] as $slug) {
             $role = Role::where('slug', $slug)->first();
             if ($role) {
                 $role->permissions()->sync($allPermissions);
@@ -396,7 +396,7 @@ class PermissionSeeder extends Seeder
 
         // Vismass Cashier – same starting permissions as the global 'cashier'
         $globalCashierPermissions = $this->getCashierPermissionSlugs();
-        $visCashier = Role::where('slug', 'vis001_cashier')->first();
+        $visCashier = Role::where('slug', 'C1_cashier')->first();
         if ($visCashier) {
             $ids = Permission::whereIn('slug', $globalCashierPermissions)->get()->pluck('id');
             $visCashier->permissions()->sync($ids);
@@ -411,7 +411,7 @@ class PermissionSeeder extends Seeder
 
         // Vismass Technician
         $globalTechPermissions = $this->getTechnicianPermissionSlugs();
-        $visTech = Role::where('slug', 'vis001_technician')->first();
+        $visTech = Role::where('slug', 'C1_technician')->first();
         if ($visTech) {
             $ids = Permission::whereIn('slug', $globalTechPermissions)->get()->pluck('id');
             $visTech->permissions()->sync($ids);
@@ -427,7 +427,7 @@ class PermissionSeeder extends Seeder
 
         // Vismass Stock Manager
         $globalStockManagerPermissions = $this->getStockManagerPermissionSlugs();
-        $visStockManager = Role::where('slug', 'vis001_stock_manager')->first();
+        $visStockManager = Role::where('slug', 'C1_stock_manager')->first();
         if ($visStockManager) {
             $ids = Permission::whereIn('slug', $globalStockManagerPermissions)->get()->pluck('id');
             $visStockManager->permissions()->sync($ids);

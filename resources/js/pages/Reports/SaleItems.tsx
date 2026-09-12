@@ -89,7 +89,7 @@ export default function SaleItems({ records, company, cashiers = [], filters }: 
     }, [records]);
 
     const showPrinterColumns = selectedItemType !== 'product';
-    const normalizedCompanyCode = (company?.company_code || 'VIS001').toUpperCase();
+    const normalizedCompanyCode = (company?.company_code || 'C1').toUpperCase();
     const printLogoSrc = normalizedCompanyCode.startsWith('MAL')
         ? '/images/malibu-logo.png'
         : normalizedCompanyCode === 'MASS'
@@ -104,10 +104,10 @@ export default function SaleItems({ records, company, cashiers = [], filters }: 
         if (selectedCashierId !== 'all') params.append('cashier_id', selectedCashierId);
         if (invoiceNo) params.append('invoice_no', invoiceNo);
         if (serialNumber && selectedItemType === 'printer') params.append('serial_number', serialNumber);
-        
+
         if (startDate) params.append('from_date', startDate);
         if (endDate) params.append('to_date', endDate);
-        
+
         window.location.href = `/reports/sale-items/export?${params.toString()}`;
     };
 
@@ -116,7 +116,7 @@ export default function SaleItems({ records, company, cashiers = [], filters }: 
             item_type: selectedItemType,
             cashier_id: selectedCashierId,
         };
-        
+
         if (invoiceNo) {
             params.invoice_no = invoiceNo;
         }
@@ -456,24 +456,24 @@ export default function SaleItems({ records, company, cashiers = [], filters }: 
                                                     {t('From Date')}
                                                 </Label>
                                                 <input
-                                                type="date"
-                                                id="from_date"
-                                                value={startDate}
-                                                onChange={(e) => setStartDate(e.target.value)}
-                                                className="w-full h-10 rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm focus:border-vismass-blue focus:ring-vismass-blue/20 focus:outline-none"
-                                            />
-                                        </div>
-                                        <div className="space-y-2">
-                                            <Label htmlFor="to_date" className="text-sm font-medium text-gray-700">
-                                                {t('To Date')}
-                                            </Label>
-                                            <input
-                                                type="date"
-                                                id="to_date"
-                                                value={endDate}
-                                                onChange={(e) => setEndDate(e.target.value)}
-                                                className="w-full h-10 rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm focus:border-vismass-blue focus:ring-vismass-blue/20 focus:outline-none"
-                                            />
+                                                    type="date"
+                                                    id="from_date"
+                                                    value={startDate}
+                                                    onChange={(e) => setStartDate(e.target.value)}
+                                                    className="w-full h-10 rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm focus:border-vismass-blue focus:ring-vismass-blue/20 focus:outline-none"
+                                                />
+                                            </div>
+                                            <div className="space-y-2">
+                                                <Label htmlFor="to_date" className="text-sm font-medium text-gray-700">
+                                                    {t('To Date')}
+                                                </Label>
+                                                <input
+                                                    type="date"
+                                                    id="to_date"
+                                                    value={endDate}
+                                                    onChange={(e) => setEndDate(e.target.value)}
+                                                    className="w-full h-10 rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm focus:border-vismass-blue focus:ring-vismass-blue/20 focus:outline-none"
+                                                />
                                             </div>
                                         </div>
 
@@ -518,75 +518,75 @@ export default function SaleItems({ records, company, cashiers = [], filters }: 
                                                     Date: {date}
                                                 </div>
                                                 <div className="overflow-x-auto">
-                                                <Table className="min-w-[1100px]">
-                                                    <TableHeader className="bg-slate-50">
-                                                        <TableRow>
-                                                            <TableHead>Invoice</TableHead>
-                                                            <TableHead>Customer</TableHead>
-                                                            <TableHead>Item Code</TableHead>
-                                                            <TableHead>Item Name</TableHead>
-                                                            {showPrinterColumns && <TableHead>Serial Number</TableHead>}
-                                                            {/* {showPrinterColumns && <TableHead>Brand</TableHead>}
+                                                    <Table className="min-w-[1100px]">
+                                                        <TableHeader className="bg-slate-50">
+                                                            <TableRow>
+                                                                <TableHead>Invoice</TableHead>
+                                                                <TableHead>Customer</TableHead>
+                                                                <TableHead>Item Code</TableHead>
+                                                                <TableHead>Item Name</TableHead>
+                                                                {showPrinterColumns && <TableHead>Serial Number</TableHead>}
+                                                                {/* {showPrinterColumns && <TableHead>Brand</TableHead>}
                                                             {showPrinterColumns && <TableHead>Model</TableHead>} */}
-                                                            <TableHead className="text-right">Qty</TableHead>
-                                                            <TableHead className="text-right">Unit Price</TableHead>
-                                                            <TableHead className="text-right">Total Price</TableHead>
-                                                        </TableRow>
-                                                    </TableHeader>
-                                                    <TableBody>
-                                                        {(() => {
-                                                            const invoiceCounts: Record<string, number> = {};
-                                                            dateRecords.forEach(r => {
-                                                                if (r.invoice_no) {
-                                                                    invoiceCounts[r.invoice_no] = (invoiceCounts[r.invoice_no] || 0) + 1;
-                                                                }
-                                                            });
-                                                            
-                                                            const renderedInvoices = new Set<string>();
-                                                            
-                                                            return dateRecords.map((r: SaleItemRecord) => {
-                                                                const isFirst = r.invoice_no && !renderedInvoices.has(r.invoice_no);
-                                                                if (isFirst && r.invoice_no) {
-                                                                    renderedInvoices.add(r.invoice_no);
-                                                                }
-                                                                
-                                                                return (
-                                                                    <TableRow key={r.id}>
-                                                                        {isFirst ? (
-                                                                            <>
-                                                                                <TableCell 
-                                                                                    rowSpan={invoiceCounts[r.invoice_no!]} 
-                                                                                    className="font-semibold align-top border-r bg-slate-50/30"
-                                                                                >
-                                                                                    {r.invoice_no}
-                                                                                </TableCell>
-                                                                                <TableCell 
-                                                                                    rowSpan={invoiceCounts[r.invoice_no!]} 
-                                                                                    className="align-top border-r"
-                                                                                >
-                                                                                    {r.customer_name || '-'}
-                                                                                </TableCell>
-                                                                            </>
-                                                                        ) : !r.invoice_no ? (
-                                                                            <>
-                                                                                <TableCell className="font-semibold">-</TableCell>
-                                                                                <TableCell>-</TableCell>
-                                                                            </>
-                                                                        ) : null}
-                                                                        <TableCell>{r.item_code}</TableCell>
-                                                                        <TableCell>{r.item_name}</TableCell>
-                                                                        {showPrinterColumns && <TableCell>{r.serial_number || '-'}</TableCell>}
-                                                                        {/* {showPrinterColumns && <TableCell>{r.brand || '-'}</TableCell>}
+                                                                <TableHead className="text-right">Qty</TableHead>
+                                                                <TableHead className="text-right">Unit Price</TableHead>
+                                                                <TableHead className="text-right">Total Price</TableHead>
+                                                            </TableRow>
+                                                        </TableHeader>
+                                                        <TableBody>
+                                                            {(() => {
+                                                                const invoiceCounts: Record<string, number> = {};
+                                                                dateRecords.forEach(r => {
+                                                                    if (r.invoice_no) {
+                                                                        invoiceCounts[r.invoice_no] = (invoiceCounts[r.invoice_no] || 0) + 1;
+                                                                    }
+                                                                });
+
+                                                                const renderedInvoices = new Set<string>();
+
+                                                                return dateRecords.map((r: SaleItemRecord) => {
+                                                                    const isFirst = r.invoice_no && !renderedInvoices.has(r.invoice_no);
+                                                                    if (isFirst && r.invoice_no) {
+                                                                        renderedInvoices.add(r.invoice_no);
+                                                                    }
+
+                                                                    return (
+                                                                        <TableRow key={r.id}>
+                                                                            {isFirst ? (
+                                                                                <>
+                                                                                    <TableCell
+                                                                                        rowSpan={invoiceCounts[r.invoice_no!]}
+                                                                                        className="font-semibold align-top border-r bg-slate-50/30"
+                                                                                    >
+                                                                                        {r.invoice_no}
+                                                                                    </TableCell>
+                                                                                    <TableCell
+                                                                                        rowSpan={invoiceCounts[r.invoice_no!]}
+                                                                                        className="align-top border-r"
+                                                                                    >
+                                                                                        {r.customer_name || '-'}
+                                                                                    </TableCell>
+                                                                                </>
+                                                                            ) : !r.invoice_no ? (
+                                                                                <>
+                                                                                    <TableCell className="font-semibold">-</TableCell>
+                                                                                    <TableCell>-</TableCell>
+                                                                                </>
+                                                                            ) : null}
+                                                                            <TableCell>{r.item_code}</TableCell>
+                                                                            <TableCell>{r.item_name}</TableCell>
+                                                                            {showPrinterColumns && <TableCell>{r.serial_number || '-'}</TableCell>}
+                                                                            {/* {showPrinterColumns && <TableCell>{r.brand || '-'}</TableCell>}
                                                                         {showPrinterColumns && <TableCell>{r.model || '-'}</TableCell>} */}
-                                                                        <TableCell className="text-right">{Number(r.quantity).toFixed(2)}</TableCell>
-                                                                        <TableCell className="text-right">{Number(r.unit_price).toFixed(2)}</TableCell>
-                                                                        <TableCell className="text-right">{Number(r.line_total).toFixed(2)}</TableCell>
-                                                                    </TableRow>
-                                                                );
-                                                            });
-                                                        })()}
-                                                    </TableBody>
-                                                </Table>
+                                                                            <TableCell className="text-right">{Number(r.quantity).toFixed(2)}</TableCell>
+                                                                            <TableCell className="text-right">{Number(r.unit_price).toFixed(2)}</TableCell>
+                                                                            <TableCell className="text-right">{Number(r.line_total).toFixed(2)}</TableCell>
+                                                                        </TableRow>
+                                                                    );
+                                                                });
+                                                            })()}
+                                                        </TableBody>
+                                                    </Table>
                                                 </div>
                                             </div>
                                         );
@@ -640,49 +640,49 @@ export default function SaleItems({ records, company, cashiers = [], filters }: 
                                                     <th style={{ textAlign: 'right' }}>Total Price</th>
                                                 </tr>
                                             </thead>
-                                             <tbody>
-                                                 {(() => {
-                                                     const invoiceCounts: Record<string, number> = {};
-                                                     dateRecords.forEach(r => {
-                                                         if (r.invoice_no) {
-                                                             invoiceCounts[r.invoice_no] = (invoiceCounts[r.invoice_no] || 0) + 1;
-                                                         }
-                                                     });
-                                                     
-                                                     const renderedInvoices = new Set<string>();
-                                                     
-                                                     return dateRecords.map((r: SaleItemRecord) => {
-                                                         const isFirst = r.invoice_no && !renderedInvoices.has(r.invoice_no);
-                                                         if (isFirst && r.invoice_no) {
-                                                             renderedInvoices.add(r.invoice_no);
-                                                         }
-                                                         
-                                                         return (
-                                                             <tr key={r.id}>
-                                                                 {isFirst ? (
-                                                                     <>
-                                                                         <td rowSpan={invoiceCounts[r.invoice_no!]}>{r.invoice_no}</td>
-                                                                         <td rowSpan={invoiceCounts[r.invoice_no!]}>{r.customer_name || '-'}</td>
-                                                                     </>
-                                                                 ) : !r.invoice_no ? (
-                                                                     <>
-                                                                         <td>-</td>
-                                                                         <td>-</td>
-                                                                     </>
-                                                                 ) : null}
-                                                                 <td>{r.item_code}</td>
-                                                                 <td>{r.item_name}</td>
-                                                                 {showPrinterColumns && <td>{r.serial_number || '-'}</td>}
-                                                                 {/* {showPrinterColumns && <td>{r.brand || '-'}</td>}
+                                            <tbody>
+                                                {(() => {
+                                                    const invoiceCounts: Record<string, number> = {};
+                                                    dateRecords.forEach(r => {
+                                                        if (r.invoice_no) {
+                                                            invoiceCounts[r.invoice_no] = (invoiceCounts[r.invoice_no] || 0) + 1;
+                                                        }
+                                                    });
+
+                                                    const renderedInvoices = new Set<string>();
+
+                                                    return dateRecords.map((r: SaleItemRecord) => {
+                                                        const isFirst = r.invoice_no && !renderedInvoices.has(r.invoice_no);
+                                                        if (isFirst && r.invoice_no) {
+                                                            renderedInvoices.add(r.invoice_no);
+                                                        }
+
+                                                        return (
+                                                            <tr key={r.id}>
+                                                                {isFirst ? (
+                                                                    <>
+                                                                        <td rowSpan={invoiceCounts[r.invoice_no!]}>{r.invoice_no}</td>
+                                                                        <td rowSpan={invoiceCounts[r.invoice_no!]}>{r.customer_name || '-'}</td>
+                                                                    </>
+                                                                ) : !r.invoice_no ? (
+                                                                    <>
+                                                                        <td>-</td>
+                                                                        <td>-</td>
+                                                                    </>
+                                                                ) : null}
+                                                                <td>{r.item_code}</td>
+                                                                <td>{r.item_name}</td>
+                                                                {showPrinterColumns && <td>{r.serial_number || '-'}</td>}
+                                                                {/* {showPrinterColumns && <td>{r.brand || '-'}</td>}
                                                                  {showPrinterColumns && <td>{r.model || '-'}</td>} */}
-                                                                 <td style={{ textAlign: 'right' }}>{Number(r.quantity).toFixed(2)}</td>
-                                                                 <td style={{ textAlign: 'right' }}>{Number(r.unit_price).toFixed(2)}</td>
-                                                                 <td style={{ textAlign: 'right' }}>{Number(r.line_total).toFixed(2)}</td>
-                                                             </tr>
-                                                         );
-                                                     });
-                                                 })()}
-                                             </tbody>
+                                                                <td style={{ textAlign: 'right' }}>{Number(r.quantity).toFixed(2)}</td>
+                                                                <td style={{ textAlign: 'right' }}>{Number(r.unit_price).toFixed(2)}</td>
+                                                                <td style={{ textAlign: 'right' }}>{Number(r.line_total).toFixed(2)}</td>
+                                                            </tr>
+                                                        );
+                                                    });
+                                                })()}
+                                            </tbody>
                                         </table>
                                     </div>
                                 );

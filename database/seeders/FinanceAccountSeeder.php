@@ -4,6 +4,10 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\FinanceAccount;
+use App\Models\Company;
+use App\Models\Section;
+use App\Models\User;
 
 class FinanceAccountSeeder extends Seeder
 {
@@ -12,15 +16,15 @@ class FinanceAccountSeeder extends Seeder
      */
     public function run(): void
     {
-        $companies = \App\Models\Company::all();
+        $companies = Company::all();
 
         // Fallback admin user id
-        $superAdmin = \App\Models\User::where('role_id', 1)->first();
+        $superAdmin = User::where('role_id', 1)->first();
         $adminId = $superAdmin ? $superAdmin->id : 1;
 
         foreach ($companies as $company) {
             // Find the main section for the company
-            $mainSection = \App\Models\Section::where('company_code', $company->company_code)
+            $mainSection = Section::where('company_code', $company->company_code)
                 ->where('is_active', true)
                 ->orderBy('is_main_stock', 'desc')
                 ->first();
@@ -36,7 +40,7 @@ class FinanceAccountSeeder extends Seeder
                 ];
 
                 foreach ($defaultAccounts as $acc) {
-                    \App\Models\FinanceAccount::firstOrCreate([
+                    FinanceAccount::firstOrCreate([
                         'account_type' => $acc['type'],
                         'company_code' => $company->company_code,
                     ], [

@@ -14,7 +14,7 @@ class VatRateSeeder extends Seeder
     public function run(): void
     {
         // Get the Vismass company
-        $vismass = Company::where('company_code', 'VIS001')->first();
+        $vismass = Company::where('company_code', 'C1')->first();
 
         if ($vismass) {
             // Create VAT rate for Vismass

@@ -56,7 +56,7 @@ echo "TEST 2: Stock In Hand Report Calculation\n";
 echo "═══════════════════════════════════════════════════════════════════\n\n";
 
 $sections = [
-    ['code' => 'VIS-SEC-003', 'company' => 'VIS001', 'expected' => 0.00],
+    ['code' => 'VIS-SEC-003', 'company' => 'C1', 'expected' => 0.00],
     ['code' => 'MAL-SEC-001', 'company' => 'MAL001', 'expected' => 6.00],
     ['code' => 'MAL-SEC-002', 'company' => 'MAL001', 'expected' => 12.00],
 ];

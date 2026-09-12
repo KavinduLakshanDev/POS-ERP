@@ -169,7 +169,7 @@ class PrinterTransferController extends Controller
             $companyCode = Auth::user()->company_code ?? session('company_code');
 
             // Resolve the company_code from the requested section so that
-            // cross-company transferred stock (e.g. VIS001 user searching MAL001
+            // cross-company transferred stock (e.g. C1 user searching
             // section) is found correctly.
             $fromSectionCode = $request->get('from_section_code');
             $sectionCompanyCode = $companyCode;

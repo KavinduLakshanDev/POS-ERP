@@ -21,14 +21,13 @@ class DatabaseSeeder extends Seeder
             SectionSeeder::class,
             VatRateSeeder::class,
             VismassUserSeeder::class,
-            MalibuUserSeeder::class,
             UsersSeeder::class,
         ]);
 
         // User::factory(10)->create();
 
         User::firstOrCreate(
-            ['email' => 'admin@unitec.edu.ph'],
+            ['email' => 'admin@unitec.lk'],
             [
                 'username' => 'unitec_admin',
                 'first_name' => 'Unitec',

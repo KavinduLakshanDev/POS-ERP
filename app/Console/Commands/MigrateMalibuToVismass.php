@@ -20,7 +20,7 @@ class MigrateMalibuToVismass extends Command
      *
      * @var string
      */
-    protected $description = 'Migrates all delivery-related records from Malibu (MAL001) to Vismass (VIS001)';
+    protected $description = 'Migrates all delivery-related records from Malibu (MAL001) to Vismass (C1)';
 
     /**
      * Execute the console command.
@@ -41,7 +41,7 @@ class MigrateMalibuToVismass extends Command
 
             foreach ($malibuVehicles as $vehicle) {
                 $vismassHasUser = DB::table('vehicles')
-                    ->where('company_code', 'VIS001')
+                    ->where('company_code', 'C1')
                     ->where('assigned_user_id', $vehicle->assigned_user_id)
                     ->exists();
 
@@ -76,7 +76,7 @@ class MigrateMalibuToVismass extends Command
                         $updatedCount = 0;
                         foreach ($malibuDeliveries as $delivery) {
                             $exists = DB::table('deliveries')
-                                ->where('company_code', 'VIS001')
+                                ->where('company_code', 'C1')
                                 ->where('delivery_number', $delivery->delivery_number)
                                 ->exists();
                             
@@ -88,7 +88,7 @@ class MigrateMalibuToVismass extends Command
                             DB::table('deliveries')
                                 ->where('id', $delivery->id)
                                 ->update([
-                                    'company_code' => 'VIS001',
+                                    'company_code' => 'C1',
                                     'delivery_number' => $newNumber
                                 ]);
                             $updatedCount++;
@@ -103,7 +103,7 @@ class MigrateMalibuToVismass extends Command
                             // There might not be a unique key, but just in case, we don't strictly need to rename unless it fails. 
                             // Actually it's safer to just try updating directly.
                             // But let's check unique constraints. Let's just do a blanket update. If it fails we'll see.
-                            DB::table('delivery_routes')->where('id', $route->id)->update(['company_code' => 'VIS001']);
+                            DB::table('delivery_routes')->where('id', $route->id)->update(['company_code' => 'C1']);
                             $updatedCount++;
                         }
                         $this->info("Updated {$updatedCount} records in {$table}");
@@ -111,7 +111,7 @@ class MigrateMalibuToVismass extends Command
                         // General update for other tables
                         $updated = DB::table($table)
                             ->where('company_code', 'MAL001')
-                            ->update(['company_code' => 'VIS001']);
+                            ->update(['company_code' => 'C1']);
                         
                         $this->info("Updated {$updated} records in {$table}");
                     }

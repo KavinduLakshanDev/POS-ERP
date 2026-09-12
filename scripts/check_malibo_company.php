@@ -51,9 +51,9 @@ foreach ($maliboUsers as $user) {
 
 // Test query with different company codes
 echo "Testing query with company code filter:\n";
-echo "1. With company_code = VIS001:\n";
+echo "1. With company_code = C1:\n";
 $query1 = Product::availableInBusinessUnit('malibo')
-    ->where('itemmaster.company_code', 'VIS001')
+    ->where('itemmaster.company_code', 'C1')
     ->count();
 echo "   Found: {$query1} products\n\n";
 

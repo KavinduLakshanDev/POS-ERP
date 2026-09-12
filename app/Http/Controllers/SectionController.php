@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Section;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
@@ -16,7 +17,7 @@ class SectionController extends Controller
         }
         $user = request()->user();
         
-        if ($user instanceof \App\Models\User) {
+        if ($user instanceof User) {
             $company = $user->company;
             $sections = $company ? $company->accessible_sections : collect([]);
         } else {
@@ -67,7 +68,7 @@ class SectionController extends Controller
         }
         $user = request()->user();
 
-        if ($user instanceof \App\Models\User) {
+        if ($user instanceof User) {
             $company = $user->company;
             $accessibleSections = $company ? $company->accessible_sections : collect([]);
         } else {
@@ -85,63 +86,63 @@ class SectionController extends Controller
         ]);
     }
 
-    // public function edit(Section $section)
-    // {
-    //     if (! request()->user() || ! request()->user()->hasPermission('sections.edit')) {
-    //         return redirect()->back()->with('error', 'Unauthorized. You do not have permission to edit sections.');
-    //     }
-    //     $user = request()->user();
+    public function edit(Section $section)
+    {
+        if (! request()->user() || ! request()->user()->hasPermission('sections.edit')) {
+            return redirect()->back()->with('error', 'Unauthorized. You do not have permission to edit sections.');
+        }
+        $user = request()->user();
 
-    //     if ($user instanceof \App\Models\User) {
-    //         $company = $user->company;
-    //         $accessibleSections = $company ? $company->accessible_sections : collect([]);
-    //     } else {
-    //         /** @var \App\Models\Company $company */
-    //         $company = $user;
-    //         $accessibleSections = $company->accessible_sections;
-    //     }
+        if ($user instanceof User) {
+            $company = $user->company;
+            $accessibleSections = $company ? $company->accessible_sections : collect([]);
+        } else {
+            /** @var \App\Models\Company $company */
+            $company = $user;
+            $accessibleSections = $company->accessible_sections;
+        }
 
-    //     if (!$accessibleSections->contains('id', $section->id)) {
-    //         return redirect()->back()->with('error', 'Unauthorized access to section.');
-    //     }
+        if (!$accessibleSections->contains('id', $section->id)) {
+            return redirect()->back()->with('error', 'Unauthorized access to section.');
+        }
 
-    //     return Inertia::render('sections/edit', [
-    //         'section' => $section
-    //     ]);
-    // }
+        return Inertia::render('sections/edit', [
+            'section' => $section
+        ]);
+    }
 
-    // public function update(Request $request, Section $section)
-    // {
-    //     if (! request()->user() || ! request()->user()->hasPermission('sections.edit')) {
-    //         return redirect()->back()->with('error', 'Unauthorized. You do not have permission to edit sections.');
-    //     }
-    //     $user = request()->user();
+    public function update(Request $request, Section $section)
+    {
+        if (! request()->user() || ! request()->user()->hasPermission('sections.edit')) {
+            return redirect()->back()->with('error', 'Unauthorized. You do not have permission to edit sections.');
+        }
+        $user = request()->user();
 
-    //     if ($user instanceof \App\Models\User) {
-    //         $company = $user->company;
-    //         $accessibleSections = $company ? $company->accessible_sections : collect([]);
-    //     } else {
-    //         /** @var \App\Models\Company $company */
-    //         $company = $user;
-    //         $accessibleSections = $company->accessible_sections;
-    //     }
+        if ($user instanceof User) {
+            $company = $user->company;
+            $accessibleSections = $company ? $company->accessible_sections : collect([]);
+        } else {
+            /** @var \App\Models\Company $company */
+            $company = $user;
+            $accessibleSections = $company->accessible_sections;
+        }
 
-    //     if (!$accessibleSections->contains('id', $section->id)) {
-    //         return redirect()->back()->with('error', 'Unauthorized access to section.');
-    //     }
+        if (!$accessibleSections->contains('id', $section->id)) {
+            return redirect()->back()->with('error', 'Unauthorized access to section.');
+        }
 
-    //     $validated = $request->validate([
-    //         'section_code' => 'nullable|string', // Read-only field, no need for uniqueness validation
-    //         'name' => 'required|string|max:255',
+        $validated = $request->validate([
+            'section_code' => 'nullable|string', // Read-only field, no need for uniqueness validation
+            'name' => 'required|string|max:255',
 
-    //         'section_type' => 'required|in:warehouse,store,office,other',
-    //         'is_main_stock' => 'boolean',
-    //     ]);
+            'section_type' => 'required|in:warehouse,store,office,other',
+            'is_main_stock' => 'boolean',
+        ]);
 
-    //     $section->update($validated);
+        $section->update($validated);
 
-    //     return redirect()->route('sections.show', $section)->with('success', 'Section updated successfully.');
-    // }
+        return redirect()->route('sections.show', $section)->with('success', 'Section updated successfully.');
+    }
 
     public function apiIndex(Request $request)
     {
@@ -170,8 +171,8 @@ class SectionController extends Controller
         }
 
         // Vismass Company Admin can see Vismass and Malibu sections
-        if ($user->company_code === 'VIS001') {
-            $query->whereIn('company_code', ['VIS001', 'MAL001']);
+        if ($user->company_code === 'C1') {
+            $query->where('company_code', $user->company_code);
         } else {
             // Other Company Admins can only see their own sections
             $query->where('company_code', $user->company_code);

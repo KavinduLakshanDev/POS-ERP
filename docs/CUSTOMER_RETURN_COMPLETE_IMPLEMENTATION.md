@@ -90,7 +90,7 @@ INSERT INTO stock_in_hand (
     uuid, RefNo, company_code, owner_company_code, section_code,
     OrdDate, ItemKy, Qty, FreeQty, TrnTyp, OrdKy, CounterID, batch_no
 ) VALUES (
-    uuid(), 'RET-VIS-SEC-002-20260225-0001', 'VIS001', 'VIS001', 'VIS-SEC-002',
+    uuid(), 'RET-VIS-SEC-002-20260225-0001', 'C1', 'C1', 'VIS-SEC-002',
     '2026-02-25', 12345, 1.00, 0.00, 'CUSTOMER_RETURN', 1, 1, 'BATCH001'
 );
 ```

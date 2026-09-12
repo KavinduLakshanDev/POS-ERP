@@ -8,10 +8,10 @@ $app->make('Illuminate\Contracts\Console\Kernel')->bootstrap();
 use App\Models\Purchase;
 use App\Models\PurchaseDet;
 
-echo "=== Checking GRN VIS001-000005 ===\n\n";
+echo "=== Checking GRN C1-000005 ===\n\n";
 
 // Find the purchase
-$purchase = Purchase::where('company_code', 'VIS001')
+$purchase = Purchase::where('company_code', 'C1')
     ->where('section_code', 'VIS-SEC-003')
     ->where('PurchaseNo', 5)
     ->with('details')

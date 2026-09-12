@@ -205,7 +205,7 @@
         }
         $company = $company ?? \App\Models\Company::first();
 
-        $companyCode = strtoupper($company->company_code ?? 'VIS001');
+        $companyCode = strtoupper($company->company_code ?? 'C1');
         $vismassPng = public_path('images/vismass-logo.png');
         $malibuPng  = public_path('images/malibu-logo.png');
         $placeholderPng = base64_decode('iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAQAAAAAYLlVAAAAHklEQVR4nO3BMQEAAADCoPVPbQ0PoAAAAAAAAAAA4BsMCgABxIoV2AAAAAElFTkSuQmCC');

@@ -169,7 +169,7 @@
         $company = \App\Models\Company::where('company_code', $purchaseOrder->company_code)->first() ?? \App\Models\Company::first();
         $vatRate = $company->vat_rate ?? 0;
 
-        $companyCode = strtoupper($company->company_code ?? 'VIS001');
+        $companyCode = strtoupper($company->company_code ?? 'C1');
         $vismassPng = public_path('images/vismass-logo.png');
         $malibuPng  = public_path('images/malibu-logo.png');
         if (!file_exists($vismassPng)) {

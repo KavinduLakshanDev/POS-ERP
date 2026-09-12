@@ -18,9 +18,9 @@ if ($models->isEmpty()) {
     }
 }
 
-echo "\n\nModels for VIS001/VIS-SEC-002:\n";
+echo "\n\nModels for C1/VIS-SEC-002:\n";
 echo "===============================\n";
-$visModels = App\Models\ProductModel::where('company_code', 'VIS001')
+$visModels = App\Models\ProductModel::where('company_code', 'C1')
     ->where('section_code', 'VIS-SEC-002')
     ->get();
 

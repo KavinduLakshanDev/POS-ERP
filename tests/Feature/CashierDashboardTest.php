@@ -66,14 +66,14 @@ test('cashier sees dashboard stats', function () {
         'ReOrdlLvl' => 10,
         'ItmNm' => 'Test Item',
         'ItemCode' => 'ITEM-001',
-        'company_code' => 'VIS001',
+        'company_code' => 'C1',
         'section_code' => 'MAIN',
     ]);
     StockInHand::create([
         'ItemKy' => $item->ItmKy,
         'Qty' => 5,
         'section_code' => 'MAIN', 
-        'owner_company_code' => 'VIS001', // Add owner for test
+        'owner_company_code' => 'C1', // Add owner for test
         'TrnTyp' => 'GRN',
         'OrdDate' => now()
     ]);

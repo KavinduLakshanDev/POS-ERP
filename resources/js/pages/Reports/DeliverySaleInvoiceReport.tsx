@@ -115,7 +115,7 @@ export default function DeliverySaleInvoiceReport({ summary, by_invoice = [], fi
     // grab company info for printing similar to profit page
     const company = pageProps.company ?? (pageProps.auth as any)?.user?.company ?? { name: '', branch: '', branch_code: '' };
 
-    const normalizedCompanyCode = (company?.company_code || 'VIS001').toUpperCase();
+    const normalizedCompanyCode = (company?.company_code || 'C1').toUpperCase();
     const printLogoSrc = normalizedCompanyCode.startsWith('MAL')
         ? '/images/malibu-logo.png'
         : normalizedCompanyCode === 'MASS'
@@ -475,7 +475,7 @@ export default function DeliverySaleInvoiceReport({ summary, by_invoice = [], fi
                                                 <TableBody>
                                                     {dateInvoices.map((inv) => {
                                                         const itemsCount = inv.items?.length || 1;
-                                                        
+
                                                         return (inv.items && inv.items.length > 0) ? (
                                                             inv.items.map((item, index) => (
                                                                 <TableRow key={`${inv.delivery_id}-${index}`} className="hover:bg-slate-50/50 transition-colors group">
@@ -551,7 +551,7 @@ export default function DeliverySaleInvoiceReport({ summary, by_invoice = [], fi
                                             <tbody>
                                                 {dateInvoices.map((inv) => {
                                                     const itemsCount = inv.items?.length || 1;
-                                                    
+
                                                     return (inv.items && inv.items.length > 0) ? (
                                                         inv.items.map((item, index) => (
                                                             <tr key={`${inv.delivery_id}-${index}`}>
@@ -559,7 +559,7 @@ export default function DeliverySaleInvoiceReport({ summary, by_invoice = [], fi
                                                                     <>
                                                                         <td rowSpan={itemsCount}>
                                                                             {inv.delivery_number}
-                                                                            {inv.payment_method ? <><br/><span style={{fontSize: '9px', textTransform: 'uppercase', color: '#666'}}>{inv.payment_method}</span></> : ''}
+                                                                            {inv.payment_method ? <><br /><span style={{ fontSize: '9px', textTransform: 'uppercase', color: '#666' }}>{inv.payment_method}</span></> : ''}
                                                                         </td>
                                                                         <td rowSpan={itemsCount}>{inv.customer_name || '-'}</td>
                                                                     </>
@@ -575,7 +575,7 @@ export default function DeliverySaleInvoiceReport({ summary, by_invoice = [], fi
                                                         <tr key={inv.delivery_id}>
                                                             <td>
                                                                 {inv.delivery_number}
-                                                                {inv.payment_method ? <><br/><span style={{fontSize: '9px', textTransform: 'uppercase', color: '#666'}}>{inv.payment_method}</span></> : ''}
+                                                                {inv.payment_method ? <><br /><span style={{ fontSize: '9px', textTransform: 'uppercase', color: '#666' }}>{inv.payment_method}</span></> : ''}
                                                             </td>
                                                             <td>{inv.customer_name || '-'}</td>
                                                             <td>-</td>

@@ -15,7 +15,7 @@ class VismassUserSeeder extends Seeder
         $user = User::where('email', 'vismass@example.com')->first();
 
         // Get company admin role
-        $role = Role::where('slug', 'vis001_company_admin')->first();
+        $role = Role::where('slug', 'C1_company_admin')->first();
 
         if (!$user) {
             // Create the user
@@ -25,7 +25,7 @@ class VismassUserSeeder extends Seeder
                 'first_name' => 'Vismass',
                 'last_name' => 'Admin',
                 'user_type' => 'company_admin',
-                'company_code' => 'VIS001',
+                'company_code' => 'C1',
                 'section_code' => 'VIS-SEC-002',
                 'role_id' => $role ? $role->id : null,
                 'is_active' => true,
@@ -38,7 +38,7 @@ class VismassUserSeeder extends Seeder
             // Update if exists
             $user->update([
                 'user_type' => 'company_admin',
-                'company_code' => 'VIS001',
+                'company_code' => 'C1',
                 'section_code' => 'VIS-SEC-002',
                 'role_id' => $role ? $role->id : null,
                 'is_active' => true,
@@ -48,7 +48,7 @@ class VismassUserSeeder extends Seeder
 
         // Add Sales Rep for Vismass
         $salesRep = User::where('email', 'sales1.vismass@example.com')->first();
-        $repRole = Role::where('slug', 'vis001_sales_rep')->first();
+        $repRole = Role::where('slug', 'C1_sales_rep')->first();
 
         if (!$salesRep) {
             User::create([
@@ -57,7 +57,7 @@ class VismassUserSeeder extends Seeder
                 'first_name' => 'Vismass',
                 'last_name' => 'Sales Rep 1',
                 'user_type' => 'company_user',
-                'company_code' => 'VIS001',
+                'company_code' => 'C1',
                 'section_code' => 'VIS-SEC-003',
                 'role_id' => $repRole ? $repRole->id : null,
                 'is_active' => true,

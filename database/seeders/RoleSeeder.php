@@ -24,117 +24,67 @@ class RoleSeeder extends Seeder
             ]
         );
 
-        // ─── Vismass (VIS001) company-specific roles ─────────────────────────
-        // Permissions are assigned independently so VIS001 and MAL001 roles
+        // ─── Company-specific roles ─────────────────────────
+        // Permissions are assigned independently so C1 and MAL001 roles
         // can have different permission sets even when they share the same
         // "type" (e.g. cashier).
         Role::firstOrCreate(
-            ['slug' => 'vis001_company_admin'],
+            ['slug' => 'company_admin'],
             [
-                'name' => 'Company Admin (Vismass)',
+                'name' => 'Company Admin',
                 'description' => 'Company admin for Vismass',
                 'level' => 'company_admin',
-                'company_code' => 'VIS001',
+                'company_code' => 'C1',
             ]
         );
 
         Role::firstOrCreate(
-            ['slug' => 'vis001_technician'],
+            ['slug' => 'technician'],
             [
-                'name' => 'Technician (Vismass)',
-                'description' => 'Technician for Vismass',
+                'name' => 'Technician',
+                'description' => 'Technician for eservices',
                 'level' => 'technician',
-                'company_code' => 'VIS001',
+                'company_code' => 'C1',
             ]
         );
 
         Role::firstOrCreate(
-            ['slug' => 'vis001_cashier'],
+            ['slug' => 'cashier'],
             [
-                'name' => 'Cashier (Vismass)',
-                'description' => 'Cashier for Vismass',
+                'name' => 'Cashier',
+                'description' => 'Cashier for retail and eservices',
                 'level' => 'cashier',
-                'company_code' => 'VIS001',
+                'company_code' => 'C1',
             ]
         );
 
         Role::firstOrCreate(
-            ['slug' => 'vis001_sales_rep'],
+            ['slug' => 'sales_rep'],
             [
-                'name' => 'Sales Representative (Vismass)',
-                'description' => 'Sales rep for Vismass',
+                'name' => 'Sales Representative',
+                'description' => 'Sales representative for retail and eservices',
                 'level' => 'sales_rep',
-                'company_code' => 'VIS001',
+                'company_code' => 'C1',
             ]
         );
 
         Role::firstOrCreate(
-            ['slug' => 'vis001_service_manager'],
+            ['slug' => 'service_manager'],
             [
-                'name' => 'Service Manager (Vismass)',
+                'name' => 'Service Manager',
                 'description' => 'Service manager for Vismass',
                 'level' => 'service_manager',
-                'company_code' => 'VIS001',
+                'company_code' => 'C1',
             ]
         );
 
         Role::firstOrCreate(
-            ['slug' => 'vis001_stock_manager'],
+            ['slug' => 'stock_manager'],
             [
-                'name' => 'Stock Manager (Vismass)',
-                'description' => 'Stock manager for Vismass',
+                'name' => 'Stock Manager',
+                'description' => 'Stock manager for retail and eservices',
                 'level' => 'stock_manager',
-                'company_code' => 'VIS001',
-            ]
-        );
-
-        // ─── Malibu (MAL001) company-specific roles ───────────────────────────
-        Role::firstOrCreate(
-            ['slug' => 'mal001_company_admin'],
-            [
-                'name' => 'Company Admin (Malibu)',
-                'description' => 'Company admin for Malibu',
-                'level' => 'company_admin',
-                'company_code' => 'MAL001',
-            ]
-        );
-
-        Role::firstOrCreate(
-            ['slug' => 'mal001_cashier'],
-            [
-                'name' => 'Cashier (Malibu)',
-                'description' => 'Cashier for Malibu',
-                'level' => 'cashier',
-                'company_code' => 'MAL001',
-            ]
-        );
-
-        Role::firstOrCreate(
-            ['slug' => 'mal001_sales_rep'],
-            [
-                'name' => 'Sales Representative (Malibu)',
-                'description' => 'Sales rep for Malibu',
-                'level' => 'sales_rep',
-                'company_code' => 'MAL001',
-            ]
-        );
-        Role::firstOrCreate(
-            ['slug' => 'mal001_service_manager'],
-            [
-                'name' => 'Service Manager (Malibu)',
-                'description' => 'Service manager for Malibu',
-                'level' => 'service_manager',
-                'company_code' => 'MAL001',
-            ]
-        );
-        
-        Role::firstOrCreate(
-            ['slug' => 'mal001_stock_manager'],
-            [
-                'name' => 'Stock Manager (Malibu)',
-                'description' => 'Stock manager for Malibu',
-                'level' => 'stock_manager',
-                'company_code' => 'MAL001',
+                'company_code' => 'C1',
             ]
         );
     }

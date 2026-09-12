@@ -6,8 +6,14 @@ use App\Models\DeliveryRoute;
 use App\Models\Product;
 use App\Models\StockInHand;
 use App\Models\User;
+use App\Models\Shop;
+use App\Models\Permission;
+use App\Models\Role;
+use App\Models\Company;
+use App\Models\Section;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class E2ESeeder extends Seeder
 {
@@ -17,7 +23,7 @@ class E2ESeeder extends Seeder
     public function run(): void
     {
         // Ensure baseline seeders are present
-        $this->call([\Database\Seeders\RoleSeeder::class, \Database\Seeders\PermissionSeeder::class, \Database\Seeders\CompanySeeder::class, \Database\Seeders\SectionSeeder::class]);
+        $this->call([RoleSeeder::class, PermissionSeeder::class, CompanySeeder::class, SectionSeeder::class]);
 
         // Create an admin user for E2E runs (company-scoped to VISMASS)
         User::firstOrCreate(
@@ -28,7 +34,7 @@ class E2ESeeder extends Seeder
                 'last_name' => 'Admin',
                 'password' => 'password',
                 'user_type' => 'super_admin',
-                'company_code' => 'VIS001',
+                'company_code' => 'C1',
                 'is_active' => true,
                 'is_verified' => true,
                 'email_verified_at' => now(),
@@ -44,14 +50,14 @@ class E2ESeeder extends Seeder
                 'last_name' => 'Rep',
                 'password' => 'password',
                 'user_type' => 'company_user',
-                'company_code' => 'VIS001',
+                'company_code' => 'C1',
                 'is_active' => true,
             ]
         );
 
         // Create a simple product and stock record in the VISMASS main section
         $product = Product::firstOrCreate(
-            ['ItmKy' => 'E2E-001', 'company_code' => 'VIS001'],
+            ['ItmKy' => 'E2E-001', 'company_code' => 'C1'],
             [
                 'ItmNm' => 'E2E Product 1',
                 'ItemCode' => 'E2EPRD1',
@@ -68,14 +74,14 @@ class E2ESeeder extends Seeder
                 'RefNo' => 'E2E-STOCK-IN-1',
                 'ItemKy' => $product->ItmKy,
                 'batch_no' => 'E2E-BATCH',
-                'company_code' => 'VIS001',
+                'company_code' => 'C1',
             ],
             [
                 'OrdDate' => now()->toDateString(),
                 'Qty' => 100,
                 'FreeQty' => 0,
                 'TrnTyp' => 'PURCHASE',
-                'owner_company_code' => 'VIS001',
+                'owner_company_code' => 'C1',
                 'section_code' => 'VIS-SEC-003',
                 'serial_number' => null,
                 'brand' => 'E2E Brand',
@@ -85,7 +91,7 @@ class E2ESeeder extends Seeder
 
         // Create a dedicated printer product with distinct retail/wholesale prices
         $printerProduct = Product::firstOrCreate(
-            ['ItmKy' => 'E2E-PRT-1', 'company_code' => 'VIS001'],
+            ['ItmKy' => 'E2E-PRT-1', 'company_code' => 'C1'],
             [
                 'ItmNm' => 'E2E Printer',
                 'ItemCode' => 'E2EPRT1',
@@ -104,7 +110,7 @@ class E2ESeeder extends Seeder
                 'RefNo' => 'E2E-PRINTER-STOCK-1',
                 'ItemKy' => $printerProduct->ItmKy,
                 'batch_no' => 'E2E-PRT-BATCH',
-                'company_code' => 'VIS001',
+                'company_code' => 'C1',
                 'serial_number' => 'PRT-001'
             ],
             [
@@ -112,7 +118,7 @@ class E2ESeeder extends Seeder
                 'Qty' => 1,
                 'FreeQty' => 0,
                 'TrnTyp' => 'PURCHASE',
-                'owner_company_code' => 'VIS001',
+                'owner_company_code' => 'C1',
                 'section_code' => 'VIS-SEC-003',
                 'brand' => 'E2E Brand',
                 'model' => 'E2E Model',
@@ -121,7 +127,7 @@ class E2ESeeder extends Seeder
 
         // Create an active delivery route for the company and attach the test sales-rep + a shop
         $route = DeliveryRoute::firstOrCreate(
-            ['company_code' => 'VIS001', 'name' => 'E2E Route'],
+            ['company_code' => 'C1', 'name' => 'E2E Route'],
             ['is_active' => true]
         );
 
@@ -129,8 +135,8 @@ class E2ESeeder extends Seeder
         $route->users()->syncWithoutDetaching([$salesRep->id]);
 
         // Create a shop and attach it to the route
-        $shop = \App\Models\Shop::firstOrCreate(
-            ['company_code' => 'VIS001', 'name' => 'E2E Shop 1'],
+        $shop = Shop::firstOrCreate(
+            ['company_code' => 'C1', 'name' => 'E2E Shop 1'],
             [
                 'address' => '1 E2E Lane',
                 'contact_phone' => '+9411123000',

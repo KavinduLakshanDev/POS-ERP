@@ -108,7 +108,7 @@
         $companyObj = is_array($company) ? (object) $company : $company;
 
         // Prefer PNG versions when available; create placeholder if missing.
-        $companyCode = strtoupper($companyObj->company_code ?? 'VIS001');
+        $companyCode = strtoupper($companyObj->company_code ?? 'C1');
 
         $vismassPngCandidates = [
             public_path('images/Vismass-logo.png'),

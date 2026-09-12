@@ -162,7 +162,7 @@ class StockTransferController extends Controller
             ->get();
 
         $sectionsQuery = Section::orderByRaw('is_main_stock DESC, name ASC');
-        if (request()->user()->role?->slug === 'vis001_service_manager') {
+        if (request()->user()->role?->slug === 'C1_service_manager') {
             $sectionsQuery->whereIn('section_code', ['VIS-SEC-001', 'VIS-SEC-002']);
         }
         $sections = $sectionsQuery->get();
@@ -193,7 +193,7 @@ class StockTransferController extends Controller
             'notes' => 'nullable|string',
         ]);
 
-        if (request()->user()->role?->slug === 'vis001_service_manager') {
+        if (request()->user()->role?->slug === 'C1_service_manager') {
             if ($validated['from_section_code'] !== 'VIS-SEC-002' || $validated['to_section_code'] !== 'VIS-SEC-001') {
                 return redirect()->back()->withErrors([
                     'from_section_code' => 'You are only allowed to transfer stock from Vismass Shop Stock to Service section.',

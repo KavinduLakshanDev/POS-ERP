@@ -44,7 +44,7 @@ export default function ItemWiseSales({ records = [], company, cashiers = [], it
         filters?.cashier_id || 'all'
     );
     const [itemName, setItemName] = useState<string>(filters?.item_name || '');
-    
+
     const [openItemSearch, setOpenItemSearch] = useState(false);
     const [itemSearchTerm, setItemSearchTerm] = useState('');
 
@@ -87,7 +87,7 @@ export default function ItemWiseSales({ records = [], company, cashiers = [], it
         return `${year}-${month}-${day}`;
     };
 
-    const normalizedCompanyCode = (company?.company_code || 'VIS001').toUpperCase();
+    const normalizedCompanyCode = (company?.company_code || 'C1').toUpperCase();
     const printLogoSrc = normalizedCompanyCode.startsWith('MAL')
         ? '/images/malibu-logo.png'
         : normalizedCompanyCode === 'MASS'
@@ -108,7 +108,7 @@ export default function ItemWiseSales({ records = [], company, cashiers = [], it
             const itemName = `"${(r.item_name || '').replace(/"/g, '""')}"`;
             const quantity = `"${Number(r.total_quantity || 0).toFixed(2)}"`;
             const totalSales = `"${Number(r.total_sales || 0).toFixed(2)}"`;
-            
+
             csvRows.push(`${itemCode},${itemName},${quantity},${totalSales}`);
         });
 
@@ -117,10 +117,10 @@ export default function ItemWiseSales({ records = [], company, cashiers = [], it
         const url = URL.createObjectURL(blob);
         const link = document.createElement('a');
         link.setAttribute('href', url);
-        
+
         const dateStr = new Date().getTime();
         link.setAttribute('download', `Item_Wise_Sales_Report_${dateStr}.csv`);
-        
+
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
@@ -130,7 +130,7 @@ export default function ItemWiseSales({ records = [], company, cashiers = [], it
         const params: Record<string, string> = {
             item_type: selectedItemType,
         };
-        
+
         if (itemName) {
             params.item_name = itemName;
         }
@@ -548,7 +548,7 @@ export default function ItemWiseSales({ records = [], company, cashiers = [], it
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 {/* Table */}
                                 <div className="space-y-6">
                                     <div className="overflow-hidden rounded-xl border border-slate-200 shadow-sm">

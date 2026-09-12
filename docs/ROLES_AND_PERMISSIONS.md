@@ -42,12 +42,12 @@ Full permission set for `sales_rep` (demo):
 
 | Email | Role | Company | Section | Default password |
 |---|---|---:|---:|---|
-| `vismass@example.com` | Company Admin | `VIS001` | None | `password` |
+| `vismass@example.com` | Company Admin | `C1` | None | `password` |
 | `malibo@example.com` | Company Admin | `MAL001` | None | `password` |
 | `admin.malibo@example.com` | Company Admin | `MAL001` | `MAL-SEC-001` | `password` |
 | `salesrep.malibo@example.com` | Sales Representative | `MAL001` | `MAL-SEC-001` | `password` |
-| `cashier1.vismass@example.com` | Cashier | `VIS001` | `VIS-SEC-002` | `password` |
-| `tech1.vismass@example.com` | Technician | `VIS001` | `VIS-SEC-001` | `password` |
+| `cashier1.vismass@example.com` | Cashier | `C1` | `VIS-SEC-002` | `password` |
+| `tech1.vismass@example.com` | Technician | `C1` | `VIS-SEC-001` | `password` |
 
 > These are seeded for development/testing only — change passwords in staging/production.
 

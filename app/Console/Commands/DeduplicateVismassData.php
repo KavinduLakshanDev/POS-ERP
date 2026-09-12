@@ -19,7 +19,7 @@ class DeduplicateVismassData extends Command
      *
      * @var string
      */
-    protected $description = 'Deduplicate shops and delivery routes under VIS001 after Malibu data migration';
+    protected $description = 'Deduplicate shops and delivery routes under C1 after Malibu data migration';
 
     /**
      * Execute the console command.
@@ -34,7 +34,7 @@ class DeduplicateVismassData extends Command
             $this->info('Deduplicating shops...');
             $duplicateShopNames = DB::table('shops')
                 ->select('name', DB::raw('COUNT(*) as count'))
-                ->where('company_code', 'VIS001')
+                ->where('company_code', 'C1')
                 ->groupBy('name')
                 ->havingRaw('COUNT(*) > 1')
                 ->pluck('name');
@@ -43,7 +43,7 @@ class DeduplicateVismassData extends Command
             foreach ($duplicateShopNames as $name) {
                 // Get all shops with this name, sorted by ID ascending
                 $shops = DB::table('shops')
-                    ->where('company_code', 'VIS001')
+                    ->where('company_code', 'C1')
                     ->where('name', $name)
                     ->orderBy('id', 'asc')
                     ->get();
@@ -87,7 +87,7 @@ class DeduplicateVismassData extends Command
             $this->info('Deduplicating delivery routes...');
             $duplicateRouteNames = DB::table('delivery_routes')
                 ->select('name', DB::raw('COUNT(*) as count'))
-                ->where('company_code', 'VIS001')
+                ->where('company_code', 'C1')
                 ->groupBy('name')
                 ->havingRaw('COUNT(*) > 1')
                 ->pluck('name');
@@ -95,7 +95,7 @@ class DeduplicateVismassData extends Command
             $routesDeleted = 0;
             foreach ($duplicateRouteNames as $name) {
                 $routes = DB::table('delivery_routes')
-                    ->where('company_code', 'VIS001')
+                    ->where('company_code', 'C1')
                     ->where('name', $name)
                     ->orderBy('id', 'asc')
                     ->get();

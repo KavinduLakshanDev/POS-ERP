@@ -17,7 +17,7 @@ class SectionSeeder extends Seeder
             ['section_code' => 'VIS-SEC-003'],
             [
                 'uuid' => \Illuminate\Support\Str::uuid(),
-                'company_code' => 'VIS001',
+                'company_code' => 'C1',
                 'name' => 'Main Stock',
                 'section_type' => 'store',
                 'is_main_stock' => true,

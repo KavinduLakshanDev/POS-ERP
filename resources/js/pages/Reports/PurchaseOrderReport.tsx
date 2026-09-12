@@ -133,7 +133,7 @@ export default function PurchaseOrderReport({
         if (!dateString) return '-';
         return new Date(dateString).toLocaleDateString('en-GB');
     };
-    const normalizedCompanyCode = (company?.company_code || company?.code || company?.branch_code || 'VIS001').toUpperCase();
+    const normalizedCompanyCode = (company?.company_code || company?.code || company?.branch_code || 'C1').toUpperCase();
     const printLogoSrc = normalizedCompanyCode.startsWith('MAL')
         ? '/images/malibu-logo.png'
         : normalizedCompanyCode === 'MASS'

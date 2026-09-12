@@ -15,10 +15,10 @@ When wastage was recorded from the delivery section (e.g., MAL-SEC-001), the Sto
 The wastage records were created with the wrong `company_code` in the `stock_in_hand` table:
 
 1. When wastage was recorded in section **MAL-SEC-001** (which belongs to company **MAL001**)
-2. The system was using the `company_code` from the reference stock record (which was **VIS001**)
+2. The system was using the `company_code` from the reference stock record (which was **C1**)
 3. This resulted in records with:
    - `section_code` = **MAL-SEC-001** ✓ (correct)
-   - `company_code` = **VIS001** ✗ (incorrect, should be **MAL001**)
+   - `company_code` = **C1** ✗ (incorrect, should be **MAL001**)
 
 4. The Stock In Hand report filters by BOTH `company_code` AND `section_code`, so it excluded these wastage records
 5. Result: Stock showed 10.00 instead of 6.00 (wastage not reflected)
@@ -28,7 +28,7 @@ The wastage records were created with the wrong `company_code` in the `stock_in_
 ```sql
 -- Grouped by company_code and section_code
 Company: MAL001 | Section: MAL-SEC-001 | Total: 10.00  -- WITHOUT wastage
-Company: VIS001 | Section: MAL-SEC-001 | Total: -4.00  -- The wastage records
+Company: C1 | Section: MAL-SEC-001 | Total: -4.00  -- The wastage records
 ```
 
 ## Solution Implemented
@@ -62,7 +62,7 @@ $companyId = $company->id ?? session('company_id') ?? ...;
 **Script:** `fix_wastage_company_code.php`
 
 - Identified 2 existing wastage records with wrong company_code
-- Updated them from VIS001 to MAL001
+- Updated them from C1 to MAL001
 - Both records were for:
   - Item: p001 (Epson L8050 ink)
   - Batch: GRN-VIS-VIS-0871
@@ -91,7 +91,7 @@ Company: MAL001 | Section: MAL-SEC-002 | Total: 12.00
   - Types: IN
   - Calculation: 12 (IN) = 12.00 ✓
 
-Company: VIS001 | Section: VIS-SEC-003 | Total: 0.00
+Company: C1 | Section: VIS-SEC-003 | Total: 0.00
   - Transactions: 3
   - Types: GRN,OUT,OUT
   - Calculation: 22 (GRN) - 10 (OUT) - 12 (OUT) = 0.00 ✓

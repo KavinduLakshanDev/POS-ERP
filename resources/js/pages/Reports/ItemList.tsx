@@ -162,7 +162,7 @@ export default function ItemList({ auth, items, categories, sections, company, f
         return `Rs ${numAmount.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
     };
 
-    const normalizedCompanyCode = (company?.code || 'VIS001').toUpperCase();
+    const normalizedCompanyCode = (company?.code || 'C1').toUpperCase();
     const printLogoSrc = normalizedCompanyCode.startsWith('MAL')
         ? '/images/malibu-logo.png'
         : normalizedCompanyCode === 'MASS'
@@ -548,7 +548,7 @@ export default function ItemList({ auth, items, categories, sections, company, f
                                                             <th className="px-6 py-4 text-left text-xs font-semibold text-sky-900 uppercase tracking-wider">Item Code</th>
                                                             <th className="px-6 py-4 text-left text-xs font-semibold text-sky-900 uppercase tracking-wider">Item Name</th>
                                                             {/* <th className="px-6 py-4 text-left text-xs font-semibold text-sky-900 uppercase tracking-wider">Category</th> */}
-                                                            
+
                                                             {/* <th className="px-6 py-4 text-left text-xs font-semibold text-sky-900 uppercase tracking-wider">Unit</th> */}
                                                             {/* <th className="px-6 py-4 text-right text-xs font-semibold text-sky-900 uppercase tracking-wider">Sale Price</th> */}
                                                             {/* <th className="px-6 py-4 text-right text-xs font-semibold text-sky-900 uppercase tracking-wider">Whole Price</th> */}
@@ -564,7 +564,7 @@ export default function ItemList({ auth, items, categories, sections, company, f
                                                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{item.ItemCode}</td>
                                                                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{item.ItmNm}</td>
                                                                 {/* <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{item.category_name}</td> */}
-                                                               
+
                                                                 {/* <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{item.unit_name}</td> */}
                                                                 {/* <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 text-right">{formatCurrency(item.SlsPri)}</td> */}
                                                                 {/* <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 text-right">{formatCurrency(item.WholePrice)}</td> */}

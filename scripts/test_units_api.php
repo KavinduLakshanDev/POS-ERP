@@ -11,11 +11,11 @@ $app->make(\Illuminate\Contracts\Console\Kernel::class)->bootstrap();
 echo "Testing Units API\n";
 echo "================\n\n";
 
-// Get a user (assuming VIS001 company)
-$user = \App\Models\User::where('company_code', 'VIS001')->first();
+// Get a user (assuming C1 company)
+$user = \App\Models\User::where('company_code', 'C1')->first();
 
 if (!$user) {
-    echo "No user found with company_code VIS001\n";
+    echo "No user found with company_code C1\n";
     exit(1);
 }
 

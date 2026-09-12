@@ -8,7 +8,7 @@ use App\Models\CodeMaster;
 echo "=== PRINTER CATEGORY FLAGS ===\n\n";
 
 echo "Vismass CAT001:\n";
-$cat = CodeMaster::where('company_code', 'VIS001')
+$cat = CodeMaster::where('company_code', 'C1')
     ->where('concode', 'CAT001')
     ->first();
 if ($cat) {

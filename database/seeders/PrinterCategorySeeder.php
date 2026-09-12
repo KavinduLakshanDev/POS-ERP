@@ -19,7 +19,7 @@ class PrinterCategorySeeder extends Seeder
     {
         // Vismass: CAT001 is Printers
         CodeMaster::where('conkey', 'CAT')
-            ->where('company_code', 'VIS001')
+            ->where('company_code', 'C1')
             ->where('concode', 'CAT001')
             ->update(['is_printer_category' => true]);
 

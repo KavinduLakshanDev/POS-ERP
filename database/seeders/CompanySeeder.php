@@ -15,12 +15,12 @@ class CompanySeeder extends Seeder
     {
         // Create Main Company: Vismass
         $vismass = Company::firstOrCreate(
-            ['company_code' => 'VIS001'],
+            ['company_code' => 'C1'],
             [
-                'name' => 'Vismass',
+                'name' => 'Company1',
                 'contact_person_name' => 'John Doe',
                 'contact_person_number' => '0771234567',
-                'email' => 'vismass@example.com',
+                'email' => 'company_admin@example.com',
                 'password' => 'password', // Will be hashed by model cast
                 'phone' => '0112345678',
                 'address' => '123, Main Street',
@@ -35,9 +35,9 @@ class CompanySeeder extends Seeder
             ]
         );
 
-        // Create Vismass Sections
+        // Create Company1 Sections
         Section::firstOrCreate(
-            ['section_code' => 'VIS-SEC-001'],
+            ['section_code' => 'C1-SEC-001'],
             [
                 'uuid' => \Illuminate\Support\Str::uuid(),
                 'company_code' => $vismass->company_code,
@@ -46,64 +46,22 @@ class CompanySeeder extends Seeder
             ]
         );
         Section::firstOrCreate(
-            ['section_code' => 'VIS-SEC-002'],
+            ['section_code' => 'C1-SEC-002'],
             [
                 'uuid' => \Illuminate\Support\Str::uuid(),
                 'company_code' => $vismass->company_code,
-                'name' => 'Vismass shop stock',
+                'name' => 'Company1 shop stock',
                 'section_type' => 'store'
             ]
         );
         Section::firstOrCreate(
-            ['section_code' => 'VIS-SEC-003'],
+            ['section_code' => 'C1-SEC-003'],
             [
                 'uuid' => \Illuminate\Support\Str::uuid(),
                 'company_code' => $vismass->company_code,
                 'name' => 'Main Stock',
                 'section_type' => 'store',
                 'is_main_stock' => true
-            ]
-        );
-
-        // Create MALIBU Company
-        $malibo = Company::firstOrCreate(
-            ['company_code' => 'MAL001'],
-            [
-                'name' => 'Malibu',
-                'contact_person_name' => 'Jane Smith',
-                'contact_person_number' => '0777654321',
-                'email' => 'malibu@example.com',
-                'password' => 'password', // Will be hashed by model cast
-                'phone' => '0118765432',
-                'address' => '456, Secondary Street',
-                'city' => 'Colombo',
-                'state' => 'Western',
-                'country' => 'Sri Lanka',
-                'postal_code' => '10200',
-                'tax_id' => 'TAX456',
-                'vat_rate' => 0.00, // No VAT for MALIBU
-                'vat_no' => null,
-                'vat_effective_date' => null,
-            ]
-        );
-
-        // Create MALIBU Sections (only Delivery and Printing)
-        Section::firstOrCreate(
-            ['section_code' => 'MAL-SEC-001'],
-            [
-                'uuid' => \Illuminate\Support\Str::uuid(),
-                'company_code' => $malibo->company_code,
-                'name' => 'Main Delivery Stock',
-                'section_type' => 'store'
-            ]
-        );
-        Section::firstOrCreate(
-            ['section_code' => 'MAL-SEC-002'],
-            [
-                'uuid' => \Illuminate\Support\Str::uuid(),
-                'company_code' => $malibo->company_code,
-                'name' => 'Malibu Shop Stock',
-                'section_type' => 'store'
             ]
         );
     }

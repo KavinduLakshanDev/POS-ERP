@@ -102,4 +102,4 @@ echo "\n📌 Next steps:\n";
 echo "1. Hard refresh browser: Ctrl+Shift+R or Ctrl+F5\n";
 echo "2. Clear browser cache completely\n";
 echo "3. Check browser console for any JavaScript errors\n";
-echo "4. Verify you're looking at the correct GRN (VIS001-VIS-SEC-003-000003)\n";
+echo "4. Verify you're looking at the correct GRN (C1-VIS-SEC-003-000003)\n";

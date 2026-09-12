@@ -1,7 +1,7 @@
 <?php
 use Illuminate\Support\Facades\DB;
 
-$companyCode = 'VIS001';
+$companyCode = 'C1';
 $sectionCode = 'VIS-SEC-001';
 $itemKeys = [104];
 

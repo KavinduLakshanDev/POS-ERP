@@ -12,7 +12,7 @@ echo "=== Testing Purchase Data ===\n\n";
 
 // Find the specific purchase
 $purchaseNo = 3; // GRN number 000003
-$companyCode = 'VIS001';
+$companyCode = 'C1';
 $sectionCode = 'VIS-SEC-003';
 
 echo "Looking for Purchase with:\n";

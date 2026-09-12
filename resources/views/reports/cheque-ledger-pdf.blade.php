@@ -100,7 +100,7 @@
 <body>
     <?php
         $companyName = $company['name'] ?? config('app.name', 'Distribution System');
-        $companyCode = strtoupper($company['code'] ?? 'VIS001');
+        $companyCode = strtoupper($company['code'] ?? 'C1');
         $statusLabel = $status === 'all' ? 'All Statuses' : ucfirst($status);
 
         $vismassPng = public_path('images/vismass-logo.png');

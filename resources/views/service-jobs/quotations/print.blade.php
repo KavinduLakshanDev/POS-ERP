@@ -564,7 +564,7 @@
         $company = $company ?? \App\Models\Company::first();
 
         $companyObj = is_array($company) ? (object) $company : $company;
-        $companyCode = strtoupper($companyObj->company_code ?? 'VIS001');
+        $companyCode = strtoupper($companyObj->company_code ?? 'C1');
         
         // Logo handling
         $vismassPng = public_path('images/vismass-logo.png');

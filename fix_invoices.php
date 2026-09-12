@@ -1,5 +1,5 @@
 <?php
-$invoices = ["VIS001-000178", "VIS001-000175", "VIS001-000145", "VIS001-000069"];
+$invoices = ["C1-000178", "C1-000175", "C1-000145", "C1-000069"];
 foreach ($invoices as $inv) {
     list($company, $no) = explode("-", $inv);
     $purchase = App\Models\Purchase::where("company_code", $company)->where("PurchaseNo", (int)$no)->first();

@@ -2,7 +2,7 @@ I have updated the
 UsersSeeder.php
  to align with your specific requirements.
 
-Vismass (VIS001)
+Vismass (C1)
 1 Company Admin:
 vismass_admin (admin.vismass@example.com)
 3 Section Admins (Service, Import, Stock):

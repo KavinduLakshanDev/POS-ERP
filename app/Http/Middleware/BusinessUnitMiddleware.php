@@ -91,7 +91,7 @@ class BusinessUnitMiddleware
         }
         
         // VISMASS company code pattern or specific logic
-        if ($companyCode === 'VIS001' || str_starts_with($companyCode, 'VIS')) {
+        if ($companyCode === 'C1' || str_starts_with($companyCode, 'VIS')) {
             return true;
         }
         
@@ -132,7 +132,7 @@ class BusinessUnitMiddleware
         }
         
         // Vismass companies can also access Malibo for shared products
-        if ($companyCode === 'VIS001' || str_starts_with($companyCode, 'VIS')) {
+        if ($companyCode === 'C1' || str_starts_with($companyCode, 'VIS')) {
             return true;
         }
         

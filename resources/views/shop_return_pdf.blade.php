@@ -182,7 +182,7 @@
     <div class="container">
         <!-- Header -->
         @php
-            $companyCode = strtoupper($company->company_code ?? 'VIS001');
+            $companyCode = strtoupper($company->company_code ?? 'C1');
 
             // Ensure we use the correct case-sensitive filenames (Linux) when available.
             $vismassPngCandidates = [

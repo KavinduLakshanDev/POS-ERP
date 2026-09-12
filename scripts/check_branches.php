@@ -9,7 +9,7 @@ use App\Models\Company;
 echo "=== BRANCHES BY COMPANY ===\n\n";
 
 $malibou = Company::where('company_code', 'MAL001')->first();
-$vismass = Company::where('company_code', 'VIS001')->first();
+$vismass = Company::where('company_code', 'C1')->first();
 
 if ($malibou) {
     echo "Malibu (MAL001) Branches:\n";
@@ -20,8 +20,8 @@ if ($malibou) {
 }
 
 if ($vismass) {
-    echo "\nVismass (VIS001) Branches:\n";
-    $vismass_branches = Section::where('company_code', 'VIS001')->get();
+    echo "\nVismass (C1) Branches:\n";
+    $vismass_branches = Section::where('company_code', 'C1')->get();
     foreach ($vismass_branches as $b) {
         echo "  - {$b->name} ({$b->section_code}) | is_main_stock: " . ($b->is_main_stock ? 'YES' : 'NO') . "\n";
     }

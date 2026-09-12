@@ -331,7 +331,7 @@ INSERT INTO purchase_det (
     quantity, rate,
     TrnTyp, status
 ) VALUES (
-    'VIS001', 'VIS-SEC-003', '725615279',
+    'C1', 'VIS-SEC-003', '725615279',
     'EPSON', 'L130', '36',
     'PRINTER-001', 'EPSON L130',
     1, 25000,
@@ -348,7 +348,7 @@ INSERT INTO stock_in_hand (
     TrnTyp, OrdDate, OrdKy,
     created_at, updated_at
 ) VALUES (
-    'VIS001', 'VIS-SEC-003', '725615279',
+    'C1', 'VIS-SEC-003', '725615279',
     'EPSON', 'L130', '36',
     'PRT-GRN-001', 1, 0,
     'GRN', NOW(), <purchase_id>,

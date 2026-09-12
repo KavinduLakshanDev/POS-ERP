@@ -81,11 +81,11 @@ it('company admin sees all company users on the create form', function () {
 it('company admin with company-specific slug also sees whole company', function () {
     $cashierRole = Role::where('slug', 'cashier')->first();
     $adminRole = Role::firstOrCreate(
-        ['slug' => 'vis001_company_admin'],
-        ['name' => 'Company Admin (vis001)', 'level' => 'company_admin', 'company_code' => 'VIS001']
+        ['slug' => 'C1_company_admin'],
+        ['name' => 'Company Admin (C1)', 'level' => 'company_admin', 'company_code' => 'C1']
     );
 
-    $companyId = 'VIS001';
+    $companyId = 'C1';
     // two users in the same company
     $first = User::factory()->create(['company_code' => $companyId]);
     $first->role_id = $cashierRole->id;
@@ -145,8 +145,8 @@ it('default to logged-in cashier when they open create form', function () {
 it('also works with company-specific cashier slug', function () {
     // create a role ending in _cashier and assign it
     $role = Role::firstOrCreate(
-        ['slug' => 'vis001_cashier'],
-        ['name' => 'Cashier (Vismass)', 'level' => 'cashier', 'company_code' => 'VIS001']
+        ['slug' => 'C1_cashier'],
+        ['name' => 'Cashier (Vismass)', 'level' => 'cashier', 'company_code' => 'C1']
     );
 
     $cashier = User::factory()->create();

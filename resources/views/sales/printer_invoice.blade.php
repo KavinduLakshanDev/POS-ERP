@@ -205,7 +205,7 @@ h1{
     $company = $company ?? \App\Models\Company::first();
 
     // Pick logo based on the company code (VisMass vs Malibu)
-    $companyCode = strtoupper($company->company_code ?? 'VIS001');
+    $companyCode = strtoupper($company->company_code ?? 'C1');
 
     $vismassPng = public_path('images/vismass-logo.png');
     $malibuPng  = public_path('images/malibu-logo.png');

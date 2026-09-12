@@ -160,7 +160,7 @@
         $companyObj = is_array($company) ? (object) $company : $company;
 
         // Prefer PNG versions when available; create placeholder if missing to avoid DOMPDF missing image errors
-        $companyCode = strtoupper($companyObj->company_code ?? 'VIS001');
+        $companyCode = strtoupper($companyObj->company_code ?? 'C1');
         $vismassPng = public_path('images/vismass-logo.png');
         $malibuPng  = public_path('images/malibu-logo.png');
         $placeholderPng = base64_decode('iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAQAAAAAYLlVAAAAHklEQVR4nO3BMQEAAADCoPVPbQ0PoAAAAAAAAAAA4BsMCgABxIoV2AAAAAElFTkSuQmCC');

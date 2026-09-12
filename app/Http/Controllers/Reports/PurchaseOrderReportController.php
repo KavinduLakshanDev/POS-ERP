@@ -78,8 +78,8 @@ class PurchaseOrderReportController extends Controller
         return Inertia::render('Reports/PurchaseOrderReport', [
             'company' => [
                 'name' => $company->company_name ?? 'VISMASS',
-                'code' => $company->company_code ?? 'VIS001',
-                'company_code' => $company->company_code ?? 'VIS001',
+                'code' => $company->company_code ?? 'C1',
+                'company_code' => $company->company_code ?? 'C1',
             ],
             'filters' => $filters,
             'suppliers' => $suppliers,
