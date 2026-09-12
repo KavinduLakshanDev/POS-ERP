@@ -7,10 +7,10 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import AppSidebarLayout from '@/layouts/app/app-sidebar-layout';
 import { type BreadcrumbItem } from '@/types';
-import { Head, useForm, Link } from '@inertiajs/react';
+import { Head, useForm, Link, router } from '@inertiajs/react';
 import { FormEventHandler, useEffect, useState } from 'react';
 import axios from 'axios';
-import { Building2, User, MapPin, FileText, Lock, Settings, ArrowLeft, Pencil, Trash2, Plus, Percent } from 'lucide-react';
+import { Building2, User, MapPin, FileText, Lock, Settings, ArrowLeft, Pencil, Trash2, Plus, Percent, Camera } from 'lucide-react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -38,6 +38,7 @@ interface Company {
     vat_rate?: number;
     vat_no?: string;
     vat_effective_date?: string;
+    logo_url?: string;
 }
 
 interface VatRate {
@@ -88,6 +89,8 @@ export default function CompanyProfile({ company }: Props) {
         end_date: '',
     });
     const [processingVatRate, setProcessingVatRate] = useState(false);
+    const [logoPreview, setLogoPreview] = useState<string | null>(company?.logo_url ? `/storage/${company.logo_url}` : null);
+    const [logoFile, setLogoFile] = useState<File | null>(null);
 
     useEffect(() => {
         fetchVatRates();
@@ -191,7 +194,27 @@ export default function CompanyProfile({ company }: Props) {
             return;
         }
 
-        put(route('company.profile.update'));
+        const formData = new FormData();
+        Object.entries(data).forEach(([key, value]) => {
+            if (key === 'password' && !value) return;
+            if (key === 'password_confirmation' && !value) return;
+            if (value !== '' && value !== null && value !== undefined) {
+                formData.append(key, String(value));
+            }
+        });
+
+        if (logoFile) {
+            formData.append('logo', logoFile);
+        }
+
+        formData.append('_method', 'put');
+
+        router.post(route('company.profile.update'), formData, {
+            preserveScroll: true,
+            onSuccess: () => {
+                setLogoFile(null);
+            },
+        });
     };
 
     return (
@@ -242,6 +265,51 @@ export default function CompanyProfile({ company }: Props) {
                                         </div>
 
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                            {/* Logo Upload */}
+                                            <div className="space-y-2">
+                                                <Label className="text-sm font-medium text-gray-700 flex items-center">
+                                                    <Camera className="w-4 h-4 mr-2 text-blue-500" />
+                                                    Company Logo
+                                                </Label>
+                                                <div className="flex items-center space-x-4">
+                                                    <div className="relative w-20 h-20 rounded-xl border-2 border-dashed border-blue-300 bg-blue-50 flex items-center justify-center overflow-hidden">
+                                                        {logoPreview ? (
+                                                            <img src={logoPreview} alt="Logo" className="w-full h-full object-cover" />
+                                                        ) : (
+                                                            <Camera className="w-6 h-6 text-blue-400" />
+                                                        )}
+                                                    </div>
+                                                    <div className="flex-1">
+                                                        <input
+                                                            type="file"
+                                                            accept="image/*"
+                                                            onChange={(e) => {
+                                                                const file = e.target.files?.[0];
+                                                                if (file) {
+                                                                    setLogoFile(file);
+                                                                    setLogoPreview(URL.createObjectURL(file));
+                                                                }
+                                                            }}
+                                                            className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                                                        />
+                                                        <p className="text-xs text-gray-500 mt-1">PNG, JPG, SVG or WebP. Max 2MB.</p>
+                                                        {logoFile && (
+                                                            <button
+                                                                type="button"
+                                                                onClick={() => {
+                                                                    setLogoFile(null);
+                                                                    setLogoPreview(company?.logo_url ? `/storage/${company.logo_url}` : null);
+                                                                }}
+                                                                className="text-xs text-red-500 hover:text-red-700 mt-1"
+                                                            >
+                                                                Remove
+                                                            </button>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                                <InputError message={errors.logo} />
+                                            </div>
+
                                             <div className="space-y-2">
                                                 <Label htmlFor="name" className="text-sm font-medium text-gray-700 flex items-center">
                                                     <Building2 className="w-4 h-4 mr-2 text-blue-500" />

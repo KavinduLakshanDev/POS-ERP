@@ -27,6 +27,7 @@ return new class extends Migration
             $table->string('user_type')->default('company_user');
             $table->string('company_code')->nullable();
             $table->string('section_code')->nullable();
+            $table->string('delivery_section_code')->nullable();
             $table->foreignId('role_id')->nullable();
             $table->string('avatar_url')->nullable();
             $table->boolean('is_active')->default(true);

@@ -33,6 +33,7 @@ class Company extends Authenticatable
         'vat_effective_date',
         'parent_id',
         'is_active',
+        'logo_url',
     ];
 
     protected $hidden = [

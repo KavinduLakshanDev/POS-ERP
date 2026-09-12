@@ -62,7 +62,17 @@ class CompanyProfileController extends Controller
             'vat_rate' => 'nullable|numeric|min:0|max:100',
             'vat_effective_date' => 'nullable|date',
             'password' => 'nullable|string|min:8|confirmed',
+            'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
         ]);
+
+        // Handle logo upload
+        if ($request->hasFile('logo')) {
+            // Delete old logo if exists
+            if ($company->logo_url && \Illuminate\Support\Facades\Storage::disk('public')->exists($company->logo_url)) {
+                \Illuminate\Support\Facades\Storage::disk('public')->delete($company->logo_url);
+            }
+            $validated['logo_url'] = $request->file('logo')->store('company-logos', 'public');
+        }
 
         // Remove password if not provided
         if (empty($validated['password'])) {

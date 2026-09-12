@@ -30,6 +30,7 @@ return new class extends Migration
             $table->date('vat_effective_date')->nullable();
             $table->foreignId('parent_id')->nullable()->constrained('companies')->onDelete('cascade');
             $table->boolean('is_active')->default(true);
+            $table->string('logo_url')->nullable();
             $table->timestamps();
         });
     }

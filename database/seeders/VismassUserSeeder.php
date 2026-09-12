@@ -4,67 +4,36 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use App\Models\Role;
+use App\Models\Section;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class VismassUserSeeder extends Seeder
 {
     public function run(): void
     {
-        // Check if user exists
-        $user = User::where('email', 'vismass@example.com')->first();
+        $companyAdminRole = Role::where('slug', 'company_admin')->first();
+        $malDeliverySection = Section::where('section_code', 'MAL-SEC-001')->first();
 
-        // Get company admin role
-        $role = Role::where('slug', 'C1_company_admin')->first();
-
-        if (!$user) {
-            // Create the user
-            User::create([
-                'email' => 'vismass@example.com',
-                'password' => Hash::make('password'), // Default password
-                'first_name' => 'Vismass',
-                'last_name' => 'Admin',
-                'user_type' => 'company_admin',
-                'company_code' => 'C1',
-                'section_code' => 'VIS-SEC-002',
-                'role_id' => $role ? $role->id : null,
-                'is_active' => true,
-                'is_verified' => true,
-                'email_verified_at' => now(),
-            ]);
-
-            echo "User vismass@example.com created as company_admin.\n";
-        } else {
-            // Update if exists
-            $user->update([
-                'user_type' => 'company_admin',
-                'company_code' => 'C1',
-                'section_code' => 'VIS-SEC-002',
-                'role_id' => $role ? $role->id : null,
-                'is_active' => true,
-            ]);
-            echo "User vismass@example.com updated to company_admin.\n";
-        }
-
-        // Add Sales Rep for Vismass
-        $salesRep = User::where('email', 'sales1.vismass@example.com')->first();
-        $repRole = Role::where('slug', 'C1_sales_rep')->first();
-
-        if (!$salesRep) {
-            User::create([
-                'email' => 'sales1.vismass@example.com',
-                'password' => Hash::make('password'),
-                'first_name' => 'Vismass',
-                'last_name' => 'Sales Rep 1',
-                'user_type' => 'company_user',
-                'company_code' => 'C1',
-                'section_code' => 'VIS-SEC-003',
-                'role_id' => $repRole ? $repRole->id : null,
-                'is_active' => true,
-                'is_verified' => true,
-                'email_verified_at' => now(),
-            ]);
-            echo "User sales1.vismass@example.com created as sales_rep.\n";
+        // ─── Child Company Admin ──────────────────────────────────────────────
+        if ($companyAdminRole) {
+            User::firstOrCreate(
+                ['email' => 'company2_admin@example.com'],
+                [
+                    'username' => 'company2_admin',
+                    'password' => 'password',
+                    'first_name' => 'Test 2',
+                    'last_name' => 'Admin',
+                    'user_type' => 'company_admin',
+                    'role_id' => $companyAdminRole->id,
+                    'company_code' => 'MAL001',
+                    'section_code' => $malDeliverySection?->section_code,
+                    'is_active' => true,
+                    'is_verified' => true,
+                    'email_verified_at' => now(),
+                    'uuid' => (string) Str::uuid(),
+                ]
+            );
         }
     }
 }

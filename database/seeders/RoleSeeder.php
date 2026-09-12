@@ -7,13 +7,9 @@ use Illuminate\Database\Seeder;
 
 class RoleSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        // ─── Global / system roles ────────────────────────────────────────────
-        // These exist for super_admin and as fallback defaults.
+        // ─── System Role ──────────────────────────────────────────────────────
         Role::firstOrCreate(
             ['slug' => 'super_admin'],
             [
@@ -21,20 +17,19 @@ class RoleSeeder extends Seeder
                 'description' => 'Has full access to the entire system',
                 'level' => 'super_admin',
                 'company_code' => null,
+                'is_system_role' => true,
             ]
         );
 
-        // ─── Company-specific roles ─────────────────────────
-        // Permissions are assigned independently so C1 and MAL001 roles
-        // can have different permission sets even when they share the same
-        // "type" (e.g. cashier).
+        // ─── Vismass Roles ────────────────────────────────────────────────────
         Role::firstOrCreate(
             ['slug' => 'company_admin'],
             [
                 'name' => 'Company Admin',
                 'description' => 'Company admin for Vismass',
                 'level' => 'company_admin',
-                'company_code' => 'C1',
+                'company_code' => 'VIS001',
+                'is_system_role' => true,
             ]
         );
 
@@ -42,9 +37,9 @@ class RoleSeeder extends Seeder
             ['slug' => 'technician'],
             [
                 'name' => 'Technician',
-                'description' => 'Technician for eservices',
+                'description' => 'Technician for services',
                 'level' => 'technician',
-                'company_code' => 'C1',
+                'company_code' => 'VIS001',
             ]
         );
 
@@ -52,9 +47,9 @@ class RoleSeeder extends Seeder
             ['slug' => 'cashier'],
             [
                 'name' => 'Cashier',
-                'description' => 'Cashier for retail and eservices',
+                'description' => 'Cashier for retail and services',
                 'level' => 'cashier',
-                'company_code' => 'C1',
+                'company_code' => 'VIS001',
             ]
         );
 
@@ -62,9 +57,9 @@ class RoleSeeder extends Seeder
             ['slug' => 'sales_rep'],
             [
                 'name' => 'Sales Representative',
-                'description' => 'Sales representative for retail and eservices',
+                'description' => 'Sales representative for retail and services',
                 'level' => 'sales_rep',
-                'company_code' => 'C1',
+                'company_code' => 'VIS001',
             ]
         );
 
@@ -74,7 +69,7 @@ class RoleSeeder extends Seeder
                 'name' => 'Service Manager',
                 'description' => 'Service manager for Vismass',
                 'level' => 'service_manager',
-                'company_code' => 'C1',
+                'company_code' => 'VIS001',
             ]
         );
 
@@ -82,9 +77,9 @@ class RoleSeeder extends Seeder
             ['slug' => 'stock_manager'],
             [
                 'name' => 'Stock Manager',
-                'description' => 'Stock manager for retail and eservices',
+                'description' => 'Stock manager for retail and services',
                 'level' => 'stock_manager',
-                'company_code' => 'C1',
+                'company_code' => 'VIS001',
             ]
         );
     }

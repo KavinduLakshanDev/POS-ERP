@@ -323,11 +323,6 @@ class PermissionSeeder extends Seeder
         $this->assignSalesRepPermissions();
         $this->assignCompanyAdminPermissions();
         $this->assignStockManagerPermissions();
-
-        // Assign the same sets to the company-specific role instances so that
-        // Vismass and Malibo start with sensible defaults.  Admins can then
-        // customise each company's role independently via the Edit Role UI.
-        $this->assignCompanySpecificPermissions();
     }
 
     private function assignCashierPermissions()
@@ -374,70 +369,6 @@ class PermissionSeeder extends Seeder
         if ($role) {
             $permissions = Permission::whereIn('slug', $this->getStockManagerPermissionSlugs())->get();
             $role->permissions()->sync($permissions->pluck('id'));
-        }
-    }
-
-    /**
-     * Mirror permissions to the company-specific role instances created by
-     * RoleSeeder.  Each company's role starts with the same permissions as its
-     * global counterpart but can be customised independently afterwards.
-     */
-    private function assignCompanySpecificPermissions(): void
-    {
-        $allPermissions = Permission::all()->pluck('id');
-
-        // Company admins (get all permissions, scoped to their company at runtime)
-        foreach (['C1_company_admin', 'mal001_company_admin'] as $slug) {
-            $role = Role::where('slug', $slug)->first();
-            if ($role) {
-                $role->permissions()->sync($allPermissions);
-            }
-        }
-
-        // Vismass Cashier – same starting permissions as the global 'cashier'
-        $globalCashierPermissions = $this->getCashierPermissionSlugs();
-        $visCashier = Role::where('slug', 'C1_cashier')->first();
-        if ($visCashier) {
-            $ids = Permission::whereIn('slug', $globalCashierPermissions)->get()->pluck('id');
-            $visCashier->permissions()->sync($ids);
-        }
-
-        // Malibo Cashier – starts the same; admin can later customise
-        $malCashier = Role::where('slug', 'mal001_cashier')->first();
-        if ($malCashier) {
-            $ids = Permission::whereIn('slug', $globalCashierPermissions)->get()->pluck('id');
-            $malCashier->permissions()->sync($ids);
-        }
-
-        // Vismass Technician
-        $globalTechPermissions = $this->getTechnicianPermissionSlugs();
-        $visTech = Role::where('slug', 'C1_technician')->first();
-        if ($visTech) {
-            $ids = Permission::whereIn('slug', $globalTechPermissions)->get()->pluck('id');
-            $visTech->permissions()->sync($ids);
-        }
-
-        // Malibo Sales Rep
-        $globalSalesRepPermissions = $this->getSalesRepPermissionSlugs();
-        $malSalesRep = Role::where('slug', 'mal001_sales_rep')->first();
-        if ($malSalesRep) {
-            $ids = Permission::whereIn('slug', $globalSalesRepPermissions)->get()->pluck('id');
-            $malSalesRep->permissions()->sync($ids);
-        }
-
-        // Vismass Stock Manager
-        $globalStockManagerPermissions = $this->getStockManagerPermissionSlugs();
-        $visStockManager = Role::where('slug', 'C1_stock_manager')->first();
-        if ($visStockManager) {
-            $ids = Permission::whereIn('slug', $globalStockManagerPermissions)->get()->pluck('id');
-            $visStockManager->permissions()->sync($ids);
-        }
-
-        // Malibo Stock Manager
-        $malStockManager = Role::where('slug', 'mal001_stock_manager')->first();
-        if ($malStockManager) {
-            $ids = Permission::whereIn('slug', $globalStockManagerPermissions)->get()->pluck('id');
-            $malStockManager->permissions()->sync($ids);
         }
     }
 
