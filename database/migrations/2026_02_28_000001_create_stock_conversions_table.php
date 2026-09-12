@@ -16,12 +16,18 @@ return new class extends Migration
             $table->unsignedBigInteger('item_id');
             $table->string('item_code', 100)->nullable();
             $table->string('item_name', 255)->nullable();
-            $table->unsignedBigInteger('stock_id')->nullable();   // source stock_in_hand TableKy
-            $table->decimal('input_quantity', 15, 4);             // qty in "from" unit  (e.g. 5 bundles)
-            $table->decimal('output_quantity', 15, 4);            // qty in "to" unit    (e.g. 50 sheets)
+            $table->string('to_item_id')->nullable();
+            $table->string('to_item_code')->nullable();
+            $table->string('to_item_name')->nullable();
+            $table->unsignedBigInteger('stock_id')->nullable();
+            $table->string('batch_no')->nullable();
+            $table->decimal('input_quantity', 15, 4);
+            $table->decimal('output_quantity', 15, 4);
+            $table->string('to_batch_no')->nullable();
             $table->decimal('conversion_factor', 15, 4)->default(1.0000);
-            $table->unsignedBigInteger('from_unit_id')->nullable();  // code_masters.id
-            $table->unsignedBigInteger('to_unit_id')->nullable();    // code_masters.id
+            $table->boolean('reverse')->default(false);
+            $table->unsignedBigInteger('from_unit_id')->nullable();
+            $table->unsignedBigInteger('to_unit_id')->nullable();
             $table->string('from_unit_name', 100)->nullable();
             $table->string('to_unit_name', 100)->nullable();
             $table->date('conversion_date');

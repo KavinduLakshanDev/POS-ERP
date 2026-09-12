@@ -24,6 +24,8 @@ return new class extends Migration
             $table->string('provider_message_id')->nullable();
             $table->decimal('cost', 8, 4)->default(0);
             $table->text('error_message')->nullable();
+            $table->json('response_data')->nullable();
+            $table->integer('retry_count')->default(0);
             $table->timestamp('sent_at')->nullable();
             $table->timestamp('delivered_at')->nullable();
             $table->timestamps();

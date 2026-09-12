@@ -8,15 +8,14 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
-     * Based on CHAMI-LAPTOP-Sh... - dbo.PurchaseDet table structure from PurchaseDet.jpg
+     * Consolidated from 14 migration files into a single create migration.
      */
     public function up(): void
     {
         Schema::create('purchase_det', function (Blueprint $table) {
-            // Company and Branch foreign keys (constraints added later)
-            $table->foreignId('company_id'); // ->constrained('companies')->onDelete('cascade');
-            $table->foreignId('section_id'); // ->constrained('sections')->onDelete('cascade');
-            
+            $table->string('company_code', 20)->nullable();
+            $table->string('section_code', 20)->nullable();
+
             $table->integer('PerchaseDetKy')->primary()->comment('Purchase Detail Key');
             $table->boolean('flnAct')->nullable()->comment('Inactive flag');
             $table->string('Status', 2)->nullable()->comment('Status');
@@ -27,23 +26,33 @@ return new class extends Migration
             $table->decimal('CostPrice', 19, 4)->nullable()->comment('Cost Price');
             $table->decimal('SalePrice', 19, 4)->nullable()->comment('Sale Price');
             $table->float('DiscountRate')->nullable()->comment('Discount Rate');
+            $table->float('CusDiscountRate')->nullable()->comment('Customer Discount Rate (%)');
+            $table->string('discount_type')->nullable()->comment('fixed or percentage');
             $table->decimal('Free', 18, 0)->nullable()->comment('Free Quantity');
             $table->decimal('AmountF', 19, 4)->nullable()->comment('Amount');
             $table->decimal('NormalCost', 19, 4)->nullable()->comment('Normal Cost');
             $table->decimal('WholePrice', 19, 4)->nullable()->comment('Wholesale Price');
-            $table->decimal('ExtraPrice', 19, 4)->nullable()->comment('Extra Price');
+            $table->decimal('VehicleSalePrice', 19, 4)->nullable()->comment('Vehicle Sale Price');
             $table->decimal('NewCostPrice', 19, 4)->nullable()->comment('New Cost Price');
-            $table->decimal('CCPrice', 19, 4)->nullable()->comment('CC Price');
             $table->timestamps();
 
-            // Foreign key constraint
+            $table->string('batch_no', 50)->nullable()->comment('Batch Number');
+            $table->string('brand')->nullable();
+            $table->string('model')->nullable();
+            $table->string('serial_number')->nullable();
+            $table->enum('warranty', ['3months', '6months', '1year', '2years', '5years'])->nullable();
+            $table->string('barcode', 100)->nullable();
+            $table->enum('stock_location_type', ['main_stock', 'printing_section'])->nullable();
+            $table->boolean('VATItem')->default(false);
+            $table->text('remark')->nullable();
+
             $table->foreign('PurchaseKey')->references('PurchaseKey')->on('purchase')->onDelete('cascade');
-            
-            // Indexes for better query performance
+            $table->unique(['company_code', 'section_code', 'serial_number'], 'idx_unique_serial_per_section');
+
             $table->index('PurchaseKey');
             $table->index('iTimKy');
             $table->index(['Status', 'flnAct']);
-            $table->index(['company_id', 'section_id']);
+            $table->index(['company_code', 'section_code']);
         });
     }
 

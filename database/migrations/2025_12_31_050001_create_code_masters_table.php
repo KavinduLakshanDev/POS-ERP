@@ -6,9 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('code_masters', function (Blueprint $table) {
@@ -20,8 +17,10 @@ return new class extends Migration
             $table->string('cname', 100);
             $table->text('description')->nullable();
             $table->string('company_code', 255);
+            $table->string('branch_code', 255)->nullable();
             $table->string('section_code', 255)->nullable();
             $table->boolean('is_active')->default(true);
+            $table->boolean('is_printer_category')->default(false)->comment('Flag to identify if category is for printers (applies per company)');
             $table->timestamps();
             $table->softDeletes();
 
@@ -29,9 +28,6 @@ return new class extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('code_masters');

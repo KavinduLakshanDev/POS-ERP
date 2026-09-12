@@ -15,6 +15,8 @@ return new class extends Migration
             $table->string('batch_no')->nullable();
             $table->string('serial_number')->nullable();
             $table->decimal('quantity', 15, 3)->default(0);
+            $table->decimal('loaded_quantity', 15, 3)->default(0);
+            $table->decimal('delivered_quantity', 15, 3)->default(0);
             $table->decimal('reserved_quantity', 15, 3)->default(0);
             $table->string('company_code')->index();
             $table->date('last_date')->nullable();

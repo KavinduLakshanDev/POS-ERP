@@ -17,8 +17,8 @@ return new class extends Migration
             $table->text('description')->nullable();
 
             // Section and company info so that queries can be scoped easily
-            $table->string('section_code', 10)->nullable();
-            $table->string('company_code', 10)->nullable();
+            $table->string('section_code', 50)->nullable();
+            $table->string('company_code', 50)->nullable();
 
             $table->timestamps();
 

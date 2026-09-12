@@ -15,16 +15,25 @@ return new class extends Migration
             $table->string('ItmKy')->nullable()->comment('Item ID from itemmaster');
             $table->string('item_code')->nullable();
             $table->string('item_name');
+            $table->string('batch_no')->nullable();
+            $table->string('serial_number')->nullable();
+            $table->string('brand')->nullable();
+            $table->string('model')->nullable();
             $table->string('barcode')->nullable();
             $table->decimal('quantity', 15, 4)->default(1);
             $table->decimal('unit_price', 18, 2)->default(0);
+            $table->decimal('cost_price', 18, 2)->default(0);
+            $table->decimal('discount_amount', 18, 2)->default(0);
             $table->decimal('total_price', 18, 2)->default(0);
+            $table->boolean('vat_inclusive')->default(false);
+            $table->decimal('vat_rate', 5, 2)->nullable();
+            $table->decimal('price_before_vat', 10, 2)->default(0);
+            $table->decimal('vat_amount', 10, 2)->default(0);
             $table->text('description')->nullable();
             $table->string('company_code', 255)->nullable();
             $table->string('section_code', 255)->nullable();
             $table->timestamps();
-            
-            // Foreign key
+
             $table->foreign('service_job_id')
                   ->references('id')
                   ->on('service_jobs')

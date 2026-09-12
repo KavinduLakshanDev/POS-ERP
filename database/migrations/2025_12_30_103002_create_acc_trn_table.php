@@ -43,6 +43,8 @@ return new class extends Migration
             $table->string('company_code', 255)->nullable();
             $table->string('section_code', 255)->nullable();
             $table->timestamps();
+
+            $table->unique('original_payment_id', 'uq_acc_trn_original_payment_id');
         });
     }
 

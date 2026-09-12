@@ -6,9 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('sections', function (Blueprint $table) {
@@ -19,15 +16,13 @@ return new class extends Migration
             $table->string('section_code')->unique();
             $table->string('name');
             $table->enum('section_type', ['warehouse', 'store', 'office', 'other'])->default('other');
+            $table->boolean('is_main_stock')->default(false);
             $table->boolean('is_active')->default(true);
             $table->json('settings_json')->nullable();
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('sections');

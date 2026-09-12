@@ -8,16 +8,18 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
+     * Consolidated: merged add_item_type_to_purchase_orders_table into the create migration.
      */
     public function up(): void
     {
         Schema::create('purchase_orders', function (Blueprint $table) {
             $table->string('company_code', 20)->nullable();
             $table->string('section_code', 20)->nullable();
-            
+
             $table->integer('PurchaseOrderKey')->primary()->comment('Purchase Order Key (int)');
             $table->boolean('flnact')->nullable()->comment('Inactive flag')->default(false);
             $table->string('Status', 20)->nullable()->comment('Status')->default('Pending');
+            $table->string('item_type', 50)->default('product');
             $table->integer('PurchaseOrderNo')->comment('Purchase Order Number');
             $table->dateTime('PODate')->nullable()->comment('PO Date');
             $table->string('SuppCode', 50)->nullable()->comment('Supplier Code');
@@ -42,7 +44,7 @@ return new class extends Migration
         Schema::create('purchase_order_det', function (Blueprint $table) {
             $table->string('company_code', 20)->nullable();
             $table->string('section_code', 20)->nullable();
-            
+
             $table->integer('PurchaseOrderDetKy')->primary()->comment('PO Detail Key');
             $table->boolean('flnAct')->nullable()->comment('Inactive flag')->default(false);
             $table->string('Status', 20)->nullable()->comment('Status');
@@ -65,7 +67,7 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('PurchaseOrderKey')->references('PurchaseOrderKey')->on('purchase_orders')->onDelete('cascade');
-            
+
             $table->index('PurchaseOrderKey');
             $table->index('iTimKy');
             $table->index(['Status', 'flnAct']);
@@ -78,6 +80,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('purchase_orders_tables');
+        Schema::dropIfExists('purchase_order_det');
+        Schema::dropIfExists('purchase_orders');
     }
 };

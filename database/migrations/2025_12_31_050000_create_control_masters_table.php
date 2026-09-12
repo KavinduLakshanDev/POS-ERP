@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('concode', 10);
             $table->string('conkey', 10)->unique();
             $table->string('conname', 100);
-            $table->string('company_code', 255);
+            $table->string('company_code', 255)->nullable();
             $table->string('section_code', 255)->nullable();
             $table->boolean('is_active')->default(true);
             $table->timestamps();

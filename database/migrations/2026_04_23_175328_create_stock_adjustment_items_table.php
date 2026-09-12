@@ -6,9 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('stock_adjustment_items', function (Blueprint $table) {
@@ -17,6 +14,8 @@ return new class extends Migration
             $table->unsignedBigInteger('product_id');
             $table->enum('adjustment_type', ['addition', 'subtraction']);
             $table->decimal('quantity', 10, 2);
+            $table->decimal('current_stock', 15, 2)->default(0);
+            $table->decimal('line_total', 15, 2)->default(0);
             $table->string('serial_number')->nullable();
             $table->string('batch_no')->nullable();
             $table->decimal('cost_price', 15, 4)->default(0);
@@ -30,9 +29,6 @@ return new class extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('stock_adjustment_items');

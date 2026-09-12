@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('cash_reconciliations', function (Blueprint $table) {
             $table->id();
             $table->string('company_code', 10);
-            $table->string('section_code', 10);
+            $table->string('section_code', 50);
             $table->unsignedBigInteger('user_id');
-            $table->string('username', 50);
+            $table->string('username', 50)->nullable();
             $table->date('reconciliation_date');
             
             // Cash denominations
@@ -31,12 +31,31 @@ return new class extends Migration
             
             // Calculated amounts
             $table->decimal('actual_cash', 15, 2)->default(0);
+            $table->integer('actual_cheques')->default(0);
+            $table->decimal('actual_cheques_amount', 12, 2)->default(0);
             $table->decimal('opening_balance', 15, 2)->default(0);
             $table->decimal('cash_sales', 15, 2)->default(0);
+            $table->decimal('sales_cash', 12, 2)->default(0);
+            $table->decimal('sales_card', 12, 2)->default(0);
+            $table->decimal('sales_bank', 12, 2)->default(0);
+            $table->decimal('sales_cheque', 12, 2)->default(0);
+            $table->decimal('sales_credit', 12, 2)->default(0);
+            $table->decimal('sales_returns', 12, 2)->default(0);
             $table->decimal('credit_payments', 15, 2)->default(0);
+            $table->decimal('collections_cash', 12, 2)->default(0);
+            $table->decimal('collections_card', 12, 2)->default(0);
+            $table->decimal('collections_bank', 12, 2)->default(0);
+            $table->decimal('collections_cheque', 12, 2)->default(0);
+            $table->decimal('transfers', 12, 2)->default(0);
+            $table->decimal('bbf', 12, 2)->default(0);
             $table->decimal('expenses', 15, 2)->default(0);
+            $table->decimal('bank_transfer_payments', 15, 2)->default(0);
+            $table->decimal('cheque_payments', 15, 2)->default(0);
+            $table->decimal('card_payments', 15, 2)->default(0);
             $table->decimal('expected_closing', 15, 2)->default(0);
+            $table->decimal('expected_cheques', 12, 2)->default(0);
             $table->decimal('variance', 15, 2)->default(0);
+            $table->decimal('cheque_variance', 12, 2)->default(0);
             
             // Notes and status
             $table->text('notes')->nullable();
@@ -44,7 +63,7 @@ return new class extends Migration
             
             $table->timestamps();
             
-            // Indexes with custom short names
+            // Indexes
             $table->index(['company_code', 'section_code', 'reconciliation_date'], 'cr_company_section_date_idx');
             $table->index(['user_id', 'reconciliation_date'], 'cr_user_date_idx');
             $table->unique(['company_code', 'section_code', 'user_id', 'reconciliation_date'], 'cr_unique_reconciliation');

@@ -14,8 +14,10 @@ return new class extends Migration
         Schema::create('finance_accounts', function (Blueprint $table) {
             $table->id();
             $table->string('account_name');
+            $table->string('main_category')->default('assets')->comment('assets, liabilities, equity, revenue, expenses');
             $table->string('account_type')->comment('cash, cheque, online, qr_payment');
             $table->decimal('opening_balance', 15, 2)->default(0);
+            $table->dateTime('cut_off_date')->nullable();
             $table->decimal('current_balance', 15, 2)->default(0);
             $table->string('company_code')->nullable();
             $table->string('section_code')->nullable();

@@ -27,7 +27,7 @@ return new class extends Migration
             // Address information
             $table->text('address');
             $table->string('town')->nullable();
-            $table->string('city');
+            $table->string('city')->nullable();
             $table->string('country')->default('Sri Lanka');
 
             // Contact information

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('AccTyp', 10)->nullable();
             $table->string('company_code', 255)->nullable();
             $table->string('section_code', 255)->nullable();
+            $table->decimal('opening_balance', 18, 2)->default(0);
             $table->decimal('CurBal', 18, 2)->nullable();
             $table->decimal('CrLmt', 18, 2)->nullable();
             $table->boolean('fVATRegistered')->nullable();
@@ -28,6 +29,8 @@ return new class extends Migration
             $table->string('BnkAccNo', 20)->nullable();
             $table->dateTime('EnDtm')->nullable();
             $table->timestamps();
+
+            $table->unique(['company_code', 'AccCd'], 'acc_mas_company_acccd_unique');
         });
     }
 

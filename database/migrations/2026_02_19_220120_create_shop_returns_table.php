@@ -11,7 +11,8 @@ return new class extends Migration
         Schema::create('shop_returns', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('shop_id');
-            $table->unsignedBigInteger('vehicle_id')->nullable();
+            $table->string('section_code')->nullable();
+            $table->unsignedBigInteger('delivery_id')->nullable();
             $table->unsignedBigInteger('recorded_by')->nullable();
             $table->string('company_code')->index();
             $table->date('return_date')->nullable();
@@ -20,7 +21,7 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('shop_id')->references('id')->on('shops')->onDelete('cascade');
-            $table->foreign('vehicle_id')->references('id')->on('vehicles')->onDelete('set null');
+            $table->foreign('delivery_id')->references('id')->on('deliveries')->onDelete('set null');
             $table->foreign('recorded_by')->references('id')->on('users')->onDelete('set null');
         });
 
