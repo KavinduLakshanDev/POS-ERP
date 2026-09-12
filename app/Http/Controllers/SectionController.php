@@ -170,13 +170,8 @@ class SectionController extends Controller
             return response()->json($query->get());
         }
 
-        // Vismass Company Admin can see Vismass and Malibu sections
-        if ($user->company_code === 'C1') {
-            $query->where('company_code', $user->company_code);
-        } else {
-            // Other Company Admins can only see their own sections
-            $query->where('company_code', $user->company_code);
-        }
+        // Company Admin can only see their own sections
+        $query->where('company_code', $user->company_code);
 
         return response()->json($query->get());
     }

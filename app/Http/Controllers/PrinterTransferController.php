@@ -99,10 +99,12 @@ class PrinterTransferController extends Controller
         }
 
         $companyCode = Auth::user()->company_code ?? session('company_code');
+        $company = Auth::user()->company;
 
-        // For Vismass company admin, fetch both Vismass and Malibu sections
-        if ($companyCode === 'VIS001') {
-            $sections = Section::whereIn('company_code', ['VIS001', 'MAL001'])
+        // For parent company admins, fetch sections from parent and all child companies
+        if ($company && $company->children()->count() > 0) {
+            $companyIds = $company->children()->pluck('id')->push($company->id);
+            $sections = Section::whereIn('company_code', Company::whereIn('id', $companyIds)->pluck('company_code'))
                 ->where('is_active', true)
                 ->orderBy('name')
                 ->get(['id', 'section_code', 'name', 'company_code', 'is_main_stock']);

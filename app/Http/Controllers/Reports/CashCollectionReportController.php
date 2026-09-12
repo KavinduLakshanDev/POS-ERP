@@ -60,10 +60,7 @@ class CashCollectionReportController extends Controller
             $company = $user ? $user->company : null;
         }
         if (!$company) {
-            $company = (object) [
-                'company_code' => 'C01',
-                'name' => 'Company',
-            ];
+            $company = Company::first();
         }
 
         // if cashier filter is supplied we apply it by joining the sales transaction

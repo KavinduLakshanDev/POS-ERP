@@ -90,8 +90,9 @@ class BusinessUnitMiddleware
             return true;
         }
         
-        // VISMASS company code pattern or specific logic
-        if ($companyCode === 'C1' || str_starts_with($companyCode, 'VIS')) {
+        // Root companies (no parent) have access to all business units
+        $company = $user->company;
+        if ($company && !$company->parent_id) {
             return true;
         }
         
@@ -126,13 +127,9 @@ class BusinessUnitMiddleware
             return true;
         }
         
-        // MALIBO company code pattern or specific logic
-        if ($companyCode === 'MAL001' || str_starts_with($companyCode, 'MAL')) {
-            return true;
-        }
-        
-        // Vismass companies can also access Malibo for shared products
-        if ($companyCode === 'C1' || str_starts_with($companyCode, 'VIS')) {
+        // Root companies (no parent) have access to all business units
+        $company = $user->company;
+        if ($company && !$company->parent_id) {
             return true;
         }
         

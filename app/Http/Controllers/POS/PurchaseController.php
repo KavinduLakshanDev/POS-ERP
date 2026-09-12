@@ -2499,7 +2499,7 @@ class PurchaseController extends Controller
 
         if (!$company) {
             $company = (object) [
-                'company_code' => $user->company_code ?? 'C01',
+                'company_code' => $user->company_code ?? null,
                 'name' => 'Company',
             ];
         }

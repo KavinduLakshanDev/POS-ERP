@@ -343,26 +343,10 @@ class CustomerController extends Controller
             // Determine section based on user's company
             $section = null;
             if ($user && $user->company_code) {
-                $targetSectionCode = null;
-                if ($user->company_code === 'C1') {
-                    $targetSectionCode = 'VIS-SEC-002';
-                } elseif ($user->company_code === 'MAL001') {
-                    $targetSectionCode = 'MAL-SEC-002';
-                }
-
-                if ($targetSectionCode) {
-                    $section = Section::where('company_code', $user->company_code)
-                        ->where('section_code', $targetSectionCode)
-                        ->first();
-                }
-
-                // Fallback if specific section not found
-                if (!$section) {
-                    $section = Section::where('company_code', $user->company_code)
-                        ->where('is_active', true)
-                        ->orderBy('is_main_stock', 'desc')
-                        ->first();
-                }
+                $section = Section::where('company_code', $user->company_code)
+                    ->where('is_active', true)
+                    ->orderBy('is_main_stock', 'desc')
+                    ->first();
             }
             
             if (!$section) {

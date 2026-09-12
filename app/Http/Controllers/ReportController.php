@@ -98,12 +98,7 @@ class ReportController extends Controller
 
         // Ensure company is not null
         if (!$company) {
-            $company = (object) [
-                'company_code' => 'C01',
-                'name' => 'VISION COPIER',
-                'primary_color' => '#00aeef',
-                'secondary_color' => '#737578'
-            ];
+            $company = \App\Models\Company::first();
         }
 
         // Get payments data - you'll need to implement the actual query

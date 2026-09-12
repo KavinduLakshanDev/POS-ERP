@@ -23,7 +23,7 @@ class ReorderLevelController extends Controller
     public function getForItem(Request $request, $itemCode)
     {
         $user = Auth::user();
-        $companyCode = $user->company_code ?? 'C01';
+        $companyCode = $user->company_code ?? '';
         $sectionCode = $user->section_code ?? null;
 
         $query = ReorderLevel::where('company_code', $companyCode)
@@ -51,7 +51,7 @@ class ReorderLevelController extends Controller
         }
 
         $user = Auth::user();
-        $companyCode = $user->company_code ?? 'C01';
+        $companyCode = $user->company_code ?? '';
 
         // Get reorder levels with product and section info
         $reorderLevels = ReorderLevel::with(['product', 'section'])
@@ -104,7 +104,7 @@ class ReorderLevelController extends Controller
             abort(403);
         }
         $user = Auth::user();
-        $companyCode = $user->company_code ?? 'C01';
+        $companyCode = $user->company_code ?? '';
 
         // make sure user has access to this record
         if ($reorderLevel->company_code !== $companyCode) {
@@ -125,7 +125,7 @@ class ReorderLevelController extends Controller
             return redirect()->back()->with('error', 'Unauthorized. You do not have permission to manage reorder levels.');
         }
         $user = Auth::user();
-        $companyCode = $user->company_code ?? 'C01';
+        $companyCode = $user->company_code ?? '';
 
         // Determine user business unit for sharing logic
         $userBusinessUnit = null;
@@ -175,7 +175,7 @@ class ReorderLevelController extends Controller
         ]);
 
         $user = Auth::user();
-        $companyCode = $user->company_code ?? 'C01';
+        $companyCode = $user->company_code ?? '';
 
         // Determine user business unit for sharing logic
         $userBusinessUnit = null;
@@ -242,7 +242,7 @@ class ReorderLevelController extends Controller
             abort(403);
         }
         $user = Auth::user();
-        $companyCode = $user->company_code ?? 'C01';
+        $companyCode = $user->company_code ?? '';
 
         // Ensure user can only edit reorder levels from their company
         if ($reorderLevel->company_code !== $companyCode) {
@@ -301,7 +301,7 @@ class ReorderLevelController extends Controller
         ]);
 
         $user = Auth::user();
-        $companyCode = $user->company_code ?? 'C01';
+        $companyCode = $user->company_code ?? '';
 
         // Ensure user can only update reorder levels from their company
         if ($reorderLevel->company_code !== $companyCode) {
@@ -375,7 +375,7 @@ class ReorderLevelController extends Controller
             abort(403);
         }
         $user = Auth::user();
-        $companyCode = $user->company_code ?? 'C01';
+        $companyCode = $user->company_code ?? '';
 
         // Ensure user can only delete reorder levels from their company
         if ($reorderLevel->company_code !== $companyCode) {
