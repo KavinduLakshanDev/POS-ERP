@@ -181,18 +181,13 @@ export default function CompanyProfile({ company }: Props) {
 
         clearErrors();
 
-        // Validate contact person number (must be + followed by 11 digits, not starting with 0)
-        const phoneRegex = /^\+[1-9]\d{10}$/;
+        // Validate contact person number (must be 10 digits)
+        const phoneRegex = /^\d{10}$/;
         if (!phoneRegex.test(data.contact_person_number)) {
-            setError('contact_person_number', 'Contact person number must be in format +XXXXXXXXXXX (12 characters, not starting with 0 after +).');
+            setError('contact_person_number', 'Contact person number must be exactly 10 digits.');
             return;
         }
 
-        // Validate business phone if provided (must be + followed by 11 digits, not starting with 0)
-        if (data.phone && !/^\+[1-9]\d{10}$/.test(data.phone)) {
-            setError('phone', 'Business phone must be in format +XXXXXXXXXXX (12 characters, not starting with 0 after +).');
-            return;
-        }
 
         const formData = new FormData();
         Object.entries(data).forEach(([key, value]) => {
@@ -307,7 +302,7 @@ export default function CompanyProfile({ company }: Props) {
                                                         )}
                                                     </div>
                                                 </div>
-                                                <InputError message={errors.logo} />
+                                                <InputError message={(errors as Record<string, string>).logo} />
                                             </div>
 
                                             <div className="space-y-2">
@@ -351,7 +346,7 @@ export default function CompanyProfile({ company }: Props) {
                                                     id="phone"
                                                     value={data.phone}
                                                     onChange={(e) => {
-                                                        const value = e.target.value.replace(/[^+\d]/g, '').slice(0, 12);
+                                                        const value = e.target.value.replace(/[^+\d]/g, '').slice(0, 11);
                                                         setData('phone', value);
                                                     }}
                                                     className="border-blue-200 focus:border-blue-400 focus:ring-blue-400/20 bg-white/50 backdrop-blur-sm"
@@ -397,12 +392,12 @@ export default function CompanyProfile({ company }: Props) {
                                                     id="contact_person_number"
                                                     value={data.contact_person_number}
                                                     onChange={(e) => {
-                                                        const value = e.target.value.replace(/[^+\d]/g, '').slice(0, 12);
+                                                        const value = e.target.value.replace(/\D/g, '').slice(0, 10);
                                                         setData('contact_person_number', value);
                                                     }}
                                                     required
                                                     className="border-blue-200 focus:border-blue-400 focus:ring-blue-400/20 bg-white/50 backdrop-blur-sm"
-                                                    placeholder="+12345678901"
+                                                    placeholder="0771234567"
                                                 />
                                                 <InputError message={errors.contact_person_number} />
                                             </div>
